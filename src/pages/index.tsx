@@ -3,10 +3,9 @@ import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-import { Flashcard } from '../components/Flashcard.js'
+import { Flashcard, FlashcardProps } from '../components/Flashcard.js'
 import { FlashcardModule } from '../components/FlashcardModule'
 import prisma from '../../lib/prisma'
-
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,12 +13,15 @@ export const getStaticProps: GetStaticProps = async () => {
   let feed = await prisma.flashcard.findMany();
   feed = JSON.parse(JSON.stringify(feed))
   return {
-    props: { feed },
-    revalidate: 10,
+    props: { feed }
   };
 };
 
-export default function Home(props) {
+type Props = {
+  feed: FlashcardProps[]
+}
+
+export default function Home(props: Props) {
   const { feed } = props
   console.log(feed)
   return (
