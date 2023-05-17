@@ -9,7 +9,7 @@ export type FlashcardProps = {
   sideAType?: string
   sideB: string
   sideBType?: string
-  updatedAt?: Date
+  updatedAt: Date
 }
 
 export const Flashcard: React.FC<{flashcard: FlashcardProps}> = (props) => {

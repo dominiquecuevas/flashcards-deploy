@@ -1,6 +1,9 @@
 import React from "react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { GetServerSideProps } from "next"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/pages/api/auth/[...nextauth]"
+import prisma from '../../../lib/prisma'
 import Layout from "../../components/Layout"
 import { FlashcardModule } from '../../components/FlashcardModule'
 import { FlashcardProps } from "../../components/Flashcard"
@@ -8,43 +11,49 @@ import { Form } from "../../components/Form"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context
+  const category = params?.category
+  let feed: FlashcardProps[] = []
+  const session = await getServerSession(context.req, context.res, authOptions)
+  if (!session) {
+    return {
+      props: { category, feed }
+    }
+  }
+  const response = await prisma.flashcard.findMany({
+    where: {
+      category: String(category),
+      creator: session?.user
+    }
+  })
+  feed = await JSON.parse(JSON.stringify(response))
   return {
-    props: { params }
+    props: { category, feed }
   };
 }
 
 type Props = {
-  params: {
-    category: string
-  }
+  category: string,
+  feed: FlashcardProps[]
 }
 
 const Category = (props: Props) => {
-  const { params } = props
-  const [data, setData] = useState<FlashcardProps[]>([])
+  const { category, feed } = props
+  const [data, setData] = useState(feed)
   const [sideA, setSideA] = useState("")
   const [sideB, setSideB] = useState("")
-  useEffect(() => {
-    const fetchFlashcards = async () => {
-      const response = await fetch(`/api/get?category=${params.category}`)
-      const data = await response.json()
-      setData(data)
-    }
-    fetchFlashcards().catch(console.error)
-  }, [])
+
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      const body = { sideA, sideB, category: params.category };
+      const body = { sideA, sideB, category };
       await fetch('/api/post', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
-      setData([{sideA: sideA, sideB: sideB}, ...data])
+      setData([{sideA: sideA, sideB: sideB, updatedAt: new Date()}, ...data])
       setSideA("")
       setSideB("")
-      // await Router.push('/');
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +61,7 @@ const Category = (props: Props) => {
   return (
     <Layout>
       <div>
-        <h2>{params.category}</h2>
+        <h2>{category}</h2>
         <Form 
           sideA={sideA}
           setSideA={setSideA}
