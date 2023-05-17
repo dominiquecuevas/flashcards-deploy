@@ -4,6 +4,7 @@ import { GetServerSideProps } from "next"
 import Layout from "../../components/Layout"
 import { FlashcardModule } from '../../components/FlashcardModule'
 import { FlashcardProps } from "../../components/Flashcard"
+import { Form } from "../../components/Form"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context
@@ -20,7 +21,9 @@ type Props = {
 
 const Category = (props: Props) => {
   const { params } = props
-  const [data, setData] = useState<FlashcardProps[]>([]);
+  const [data, setData] = useState<FlashcardProps[]>([])
+  const [sideA, setSideA] = useState("")
+  const [sideB, setSideB] = useState("")
   useEffect(() => {
     const fetchFlashcards = async () => {
       const response = await fetch(`/api/get?category=${params.category}`)
@@ -29,11 +32,34 @@ const Category = (props: Props) => {
     }
     fetchFlashcards().catch(console.error)
   }, [])
-
+  const submitData = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    try {
+      const body = { sideA, sideB, category: params.category };
+      await fetch('/api/post', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      setData([{sideA: sideA, sideB: sideB}, ...data])
+      setSideA("")
+      setSideB("")
+      // await Router.push('/');
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <Layout>
       <div>
         <h2>{params.category}</h2>
+        <Form 
+          sideA={sideA}
+          setSideA={setSideA}
+          sideB={sideB}
+          setSideB={setSideB}
+          onSubmit={submitData}
+        />
         <FlashcardModule flashcards={data} />
       </div>
       <style jsx>{`

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
 export type FlashcardProps = {
-  category: string
-  createdAt: Date
-  creatorId: string
-  id: string
+  category?: string
+  createdAt?: Date
+  creatorId?: string
+  id?: string
   sideA: string
-  sideAType: string
+  sideAType?: string
   sideB: string
-  sideBType: string
-  updatedAt: Date
+  sideBType?: string
+  updatedAt?: Date
 }
 
 export const Flashcard: React.FC<{flashcard: FlashcardProps}> = (props) => {
