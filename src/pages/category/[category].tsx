@@ -1,63 +1,57 @@
-import React from "react"
-import { useState } from "react"
-import { GetServerSideProps } from "next"
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/pages/api/auth/[...nextauth]"
-import prisma from '../../../lib/prisma'
+import React, { useEffect, useState } from "react"
+import { GetServerSideProps, GetStaticProps } from "next"
 import Layout from "../../components/Layout"
 import { FlashcardModule } from '../../components/FlashcardModule'
 import { FlashcardProps } from "../../components/Flashcard"
 import { Form } from "../../components/Form"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { params } = context
-  const category = params?.category
-  let feed: FlashcardProps[] = []
-  const session = await getServerSession(context.req, context.res, authOptions)
-  if (!session) {
-    return {
-      props: { category, feed }
-    }
-  }
-  const response = await prisma.flashcard.findMany({
-    where: {
-      category: String(category),
-      creator: session?.user
-    }
-  })
-  feed = await JSON.parse(JSON.stringify(response))
+  const { query } = context
+  const category = query.category
   return {
-    props: { category, feed }
-  };
+    props: { category }
+  }
 }
 
 type Props = {
-  category: string,
-  feed: FlashcardProps[]
+  category: string
 }
 
 const Category = (props: Props) => {
-  const { category, feed } = props
-  const [data, setData] = useState(feed)
+  const { category } = props
+  const [data, setData] = useState([])
   const [sideA, setSideA] = useState("")
   const [sideB, setSideB] = useState("")
+
+  const fetchData = async () => {
+    console.log('fetchData category', category)
+    const response = await fetch(`/api/get/?category=${category}`)
+    const dataCategories = await response.json()
+    setData(dataCategories)
+  }
+
+  useEffect(() => {
+    console.log('category', category)
+    fetchData()
+  }, [])
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      const body = { sideA, sideB, category };
+      const body = { sideA, sideB, category: category };
       await fetch('/api/post', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
-      setData([{sideA: sideA, sideB: sideB, updatedAt: new Date()}, ...data])
+      fetchData()
       setSideA("")
       setSideB("")
     } catch (error) {
       console.error(error);
     }
   }
+
   return (
     <Layout>
       <div>
@@ -69,7 +63,7 @@ const Category = (props: Props) => {
           setSideB={setSideB}
           onSubmit={submitData}
         />
-        <FlashcardModule flashcards={data} />
+        <FlashcardModule flashcards={data} fetchData={fetchData} />
       </div>
       <style jsx>{`
         .page {

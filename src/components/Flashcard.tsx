@@ -1,29 +1,35 @@
 import React, { useState } from 'react';
 
 export type FlashcardProps = {
-  category?: string
-  createdAt?: Date
-  creatorId?: string
-  id?: string
-  sideA: string
-  sideAType?: string
-  sideB: string
-  sideBType?: string
-  updatedAt: Date
+  flashcard: {
+    category?: string
+    createdAt?: Date
+    creatorId?: string
+    id: string
+    sideA: string
+    sideAType?: string
+    sideB: string
+    sideBType?: string
+    updatedAt: Date
+  }
+  showSelect: boolean
 }
 
-export const Flashcard: React.FC<{flashcard: FlashcardProps}> = (props) => {
-  const [show, setShow] = useState(false)
-  const {sideA, sideB} = props.flashcard
+export const Flashcard = (props: FlashcardProps) => {
+  const [showSide, setShowSide] = useState(false)
+  const {sideA, sideB, id} = props.flashcard
+  const {showSelect, handleCheckedChange} = props
   const style = {
-    transform: show ? 'rotateY(180deg)' : '',
+    transform: showSide ? 'rotateY(180deg)' : '',
   }
   const handleClick = () => {
-    setShow(!show)
+    setShowSide(!showSide)
   }
+
   return (
+    <div style={{position: 'relative'}}>
     <div className='flashcard'>
-      <div className='flashcard-parent' style={style}>
+      <div className='flashcard-inner' style={style}>
         <div
             className='flashcard-sideA' 
             onClick={handleClick}
@@ -37,6 +43,17 @@ export const Flashcard: React.FC<{flashcard: FlashcardProps}> = (props) => {
           {sideB}
         </div>
       </div>
+    </div>
+    {showSelect && (
+      <div style={{position: 'absolute', top: 10, right: 10}}>
+        <input
+            type="checkbox"
+            value={id}
+            defaultChecked={false}
+            onChange={handleCheckedChange}
+        />
+      </div>
+    )}
     </div>
   )
 }

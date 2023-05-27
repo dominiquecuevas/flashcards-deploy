@@ -1,6 +1,15 @@
-import React, { useState } from 'react'
+import { FormEventHandler, ReactEventHandler, SyntheticEvent } from "react"
+import { FunctionExpression } from "typescript"
 
-export const Form: React.FC = (props) => {
+export type Props = {
+  sideA: string
+  setSideA: ReactEventHandler
+  sideB: string
+  setSideB: ReactEventHandler
+  onSubmit: FormEventHandler
+}
+
+export const Form = (props: Props) => {
   const { sideA, setSideA, sideB, setSideB, onSubmit } = props
   return (
     <form onSubmit={onSubmit}>

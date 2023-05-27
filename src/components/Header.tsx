@@ -121,9 +121,6 @@ const Header: React.FC = () => {
             Feed
           </a>
         </Link>
-        <Link legacyBehavior href="/">
-          <a data-active={isActive('/')}>My drafts</a>
-        </Link>
         <style jsx>{`
           .bold {
             font-weight: bold;
@@ -150,11 +147,6 @@ const Header: React.FC = () => {
         <p>
           {session.user.name} ({session.user.email})
         </p>
-        <Link legacyBehavior href="/create">
-          <button>
-            <a>New post</a>
-          </button>
-        </Link>
         <button onClick={() => signOut()}>
           <a>Log out</a>
         </button>

@@ -1,18 +1,22 @@
-import React, { useState } from 'react'
+import React, { ReactHTMLElement, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-export const Categories: React.FC = (props) => {
+export type Props = {
+  categoriesFeed: string[]
+}
+
+export const CategoriesList = (props: Props) => {
   const [newCategory, setNewCategory] = useState('')
   const router = useRouter()
   const { categoriesFeed } = props
 
-  const submitData = (e) => {
+  const submitData = (e: React.SyntheticEvent) => {
     e.preventDefault()
     router.push(`/category/${encodeURIComponent(newCategory)}`)
   }
   const categories = categoriesFeed.map((category) => (
-    <li>
+    <li id={category}>
       <Link href={`/category/${encodeURIComponent(category)}`}>{category}</Link>
     </li>
   ))
