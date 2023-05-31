@@ -1,17 +1,15 @@
-import { fetchData } from 'next-auth/client/_utils'
-import React, { ReactEventHandler, useState } from 'react'
+import React, { useState } from 'react'
 import { Flashcard, FlashcardProps } from './Flashcard'
 
-export const FlashcardModule: React.FC<{flashcards: FlashcardProps[], fetchData: FunctionConstructor}> = (props) => {
-  const { flashcards, fetchData } = props
-  const [showSelect, setShowSelect] = useState(false)
-  const [toggleDelete, setToggleDelete] = useState(true)
+export const FlashcardModule = (props) => {
+  const { flashcards, fetchData, toggleRadios, selectedRadio, handleOptionChange } = props
+  const [toggleCheckboxes, setToggleCheckboxes] = useState(false)
   const [allChecked, setAllChecked] = useState<string[]>([])
+  // TODO: undo feature
 
-  const handleClick = () => {
-    setToggleDelete(!toggleDelete)
-    setShowSelect(!showSelect)
-    console.log(showSelect)
+  const handleSelectClick = () => {
+    setToggleCheckboxes(!toggleCheckboxes)
+    setAllChecked([])
   }
   const handleCheckedChange = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement
@@ -24,15 +22,11 @@ export const FlashcardModule: React.FC<{flashcards: FlashcardProps[], fetchData:
 
   const handleDeleteClick = async () => {
     try {
-      console.log('allChecked', allChecked)
-      // const body = { ids: allChecked }
       await fetch(`/api/delete?ids=${allChecked}`, {
         method: 'DELETE'
       })
       fetchData()
-      setToggleDelete(!toggleDelete)
       setAllChecked([])
-      setShowSelect(!showSelect)
     } catch (error) {
       console.error(error);
     }
@@ -47,16 +41,25 @@ export const FlashcardModule: React.FC<{flashcards: FlashcardProps[], fetchData:
     }
     return 0;
   })
-  const cardSides = flashcards.map(flashcard => <Flashcard 
-    key={flashcard?.id} 
-    flashcard={flashcard}
-    showSelect={showSelect}
-    handleCheckedChange={handleCheckedChange}
- />)
+  const cardSides = flashcards.map(flashcard => (
+    <label htmlFor={toggleRadios ? `radio-${flashcard.id}` : `checkbox-${flashcard.id}`}>
+      {/* <label htmlFor={`checkbox-${flashcard.id}`}> */}
+        <Flashcard 
+            key={flashcard?.id} 
+            flashcard={flashcard}
+            toggleCheckboxes={toggleCheckboxes}
+            handleCheckedChange={handleCheckedChange}
+            toggleRadios={toggleRadios}
+            selectedRadio={selectedRadio}
+            handleOptionChange={handleOptionChange}
+        />
+      </label>
+    // </label>
+  ))
   return (
     <>
-      <input type="button" onClick={handleClick} value={toggleDelete ? 'Select' : 'Cancel'} />
-      {!toggleDelete && (<input type="button" disabled={!allChecked.length} value="Delete" onClick={handleDeleteClick}/>)}
+      <input type="button" onClick={handleSelectClick} value={!toggleCheckboxes ? 'Select' : 'Cancel'} disabled={toggleRadios} />
+      <input type="button" disabled={!allChecked.length} value="Delete" onClick={handleDeleteClick}/>
       <div className="flashcard-container">
         {cardSides}
       </div>

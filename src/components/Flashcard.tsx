@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FormEventHandler } from 'react';
 
 export type FlashcardProps = {
   flashcard: {
@@ -12,22 +12,27 @@ export type FlashcardProps = {
     sideBType?: string
     updatedAt: Date
   }
-  showSelect: boolean
+  toggleCheckboxes: boolean
+  handleCheckedChange: FormEventHandler
+  toggleRadios: boolean
 }
 
 export const Flashcard = (props: FlashcardProps) => {
   const [showSide, setShowSide] = useState(false)
   const {sideA, sideB, id} = props.flashcard
-  const {showSelect, handleCheckedChange} = props
-  const style = {
+  const {toggleCheckboxes, handleCheckedChange, toggleRadios, selectedRadio, handleOptionChange} = props
+  const style = { 
     transform: showSide ? 'rotateY(180deg)' : '',
   }
   const handleClick = () => {
-    setShowSide(!showSide)
+    if ( toggleCheckboxes || toggleRadios) {
+      setShowSide(false)
+    } else {
+      setShowSide(!showSide)
+    }
   }
 
   return (
-    <div style={{position: 'relative'}}>
     <div className='flashcard'>
       <div className='flashcard-inner' style={style}>
         <div
@@ -43,14 +48,27 @@ export const Flashcard = (props: FlashcardProps) => {
           {sideB}
         </div>
       </div>
-    </div>
-    {showSelect && (
+      {toggleCheckboxes && (
       <div style={{position: 'absolute', top: 10, right: 10}}>
         <input
             type="checkbox"
+            id={`checkbox-${id}`}
             value={id}
             defaultChecked={false}
             onChange={handleCheckedChange}
+        />
+      </div>
+    )}
+      {toggleRadios && (
+      <div style={{position: 'absolute', top: 10, left: 10}}>
+        <input
+            type="radio"
+            id={`radio-${id}`}
+            value={id}
+            data-sideA={sideA}
+            data-sideB={sideB}
+            checked={selectedRadio === id}
+            onChange={handleOptionChange}
         />
       </div>
     )}

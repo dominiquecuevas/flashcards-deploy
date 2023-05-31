@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { GetServerSideProps, GetStaticProps } from "next"
 import Layout from "../../components/Layout"
 import { FlashcardModule } from '../../components/FlashcardModule'
@@ -22,6 +22,11 @@ const Category = (props: Props) => {
   const [data, setData] = useState([])
   const [sideA, setSideA] = useState("")
   const [sideB, setSideB] = useState("")
+  const [toggleRadios, setToggleRadios] = useState(false)
+  const [selectedRadio, setSelectedRadio] = useState('')
+  const inputElement = useRef<HTMLInputElement>(null)
+  // TODO: refactor to flux pattern
+  // TODO: put api endpoint
 
   const fetchData = async () => {
     console.log('fetchData category', category)
@@ -47,9 +52,24 @@ const Category = (props: Props) => {
       fetchData()
       setSideA("")
       setSideB("")
+      inputElement.current?.focus()
     } catch (error) {
       console.error(error);
     }
+  }
+
+  const handleEditClick = () => {
+    setToggleRadios(!toggleRadios)
+    setSelectedRadio('')
+  }
+
+  const handleOptionChange = (e) => {
+    const target = e.target
+    setSelectedRadio(target.value)
+    setSideA(target.getAttribute('data-sideA'))
+    setSideB(target.getAttribute('data-sideB'))
+    console.log('target.value', target.value)
+    console.log('target.getAttribute(data-sideA)', target.getAttribute('data-sideA'))
   }
 
   return (
@@ -62,8 +82,18 @@ const Category = (props: Props) => {
           sideB={sideB}
           setSideB={setSideB}
           onSubmit={submitData}
+          inputElement={inputElement}
+          toggleRadios={toggleRadios}
+          handleEditClick={handleEditClick}
         />
-        <FlashcardModule flashcards={data} fetchData={fetchData} />
+        <FlashcardModule 
+          flashcards={data} 
+          fetchData={fetchData} 
+          toggleRadios={toggleRadios} 
+          handleEditClick={handleEditClick} 
+          selectedRadio={selectedRadio} 
+          handleOptionChange={handleOptionChange}
+        />
       </div>
       <style jsx>{`
         .page {

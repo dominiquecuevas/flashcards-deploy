@@ -16,7 +16,7 @@ export const CategoriesList = (props: Props) => {
     router.push(`/category/${encodeURIComponent(newCategory)}`)
   }
   const categories = categoriesFeed.map((category) => (
-    <li id={category}>
+    <li key={category}>
       <Link href={`/category/${encodeURIComponent(category)}`}>{category}</Link>
     </li>
   ))
