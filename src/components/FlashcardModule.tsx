@@ -61,7 +61,7 @@ export const FlashcardModule = (props) => {
       <input type="button" onClick={handleSelectClick} value={!toggleCheckboxes ? 'Select' : 'Cancel'} disabled={toggleRadios} />
       <input type="button" disabled={!allChecked.length} value="Delete" onClick={handleDeleteClick}/>
       <div className="flashcard-container">
-        {cardSides}
+        {/* {cardSides} */}
       </div>
     </>
   )

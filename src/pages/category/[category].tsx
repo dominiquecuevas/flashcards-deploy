@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from "react"
-import { GetServerSideProps, GetStaticProps } from "next"
+import React, { useEffect } from "react"
+import { GetServerSideProps } from "next"
 import Layout from "../../components/Layout"
-import { FlashcardModule } from '../../components/FlashcardModule'
-import { FlashcardProps } from "../../components/Flashcard"
-import { Form } from "../../components/Form"
+import { FlashcardModulev2 } from '../../components/FlashcardModulev2'
+import { Formv2 } from "@/components/Formv2"
+import { EditButton } from "@/components/EditButton"
+import { DeleteButton } from "@/components/DeleteButton"
+import { useFlashcardsDispatch } from "../../FlashcardsContext"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context
@@ -19,81 +21,27 @@ type Props = {
 
 const Category = (props: Props) => {
   const { category } = props
-  const [data, setData] = useState([])
-  const [sideA, setSideA] = useState("")
-  const [sideB, setSideB] = useState("")
-  const [toggleRadios, setToggleRadios] = useState(false)
-  const [selectedRadio, setSelectedRadio] = useState('')
-  const inputElement = useRef<HTMLInputElement>(null)
-  // TODO: refactor to flux pattern
-  // TODO: put api endpoint
+  const dispatch = useFlashcardsDispatch()
 
   const fetchData = async () => {
-    console.log('fetchData category', category)
     const response = await fetch(`/api/get/?category=${category}`)
-    const dataCategories = await response.json()
-    setData(dataCategories)
+    const data = await response.json()
+    dispatch({type: 'fetch_flashcards', payload: data})
   }
 
   useEffect(() => {
-    console.log('category', category)
     fetchData()
   }, [])
 
-  const submitData = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    try {
-      const body = { sideA, sideB, category: category };
-      await fetch('/api/post', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      fetchData()
-      setSideA("")
-      setSideB("")
-      inputElement.current?.focus()
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  const handleEditClick = () => {
-    setToggleRadios(!toggleRadios)
-    setSelectedRadio('')
-  }
-
-  const handleOptionChange = (e) => {
-    const target = e.target
-    setSelectedRadio(target.value)
-    setSideA(target.getAttribute('data-sideA'))
-    setSideB(target.getAttribute('data-sideB'))
-    console.log('target.value', target.value)
-    console.log('target.getAttribute(data-sideA)', target.getAttribute('data-sideA'))
-  }
 
   return (
     <Layout>
       <div>
         <h2>{category}</h2>
-        <Form 
-          sideA={sideA}
-          setSideA={setSideA}
-          sideB={sideB}
-          setSideB={setSideB}
-          onSubmit={submitData}
-          inputElement={inputElement}
-          toggleRadios={toggleRadios}
-          handleEditClick={handleEditClick}
-        />
-        <FlashcardModule 
-          flashcards={data} 
-          fetchData={fetchData} 
-          toggleRadios={toggleRadios} 
-          handleEditClick={handleEditClick} 
-          selectedRadio={selectedRadio} 
-          handleOptionChange={handleOptionChange}
-        />
+        <Formv2 category={category} fetchData={fetchData} />
+        <EditButton fetchData={fetchData} />
+        <DeleteButton fetchData={fetchData} />
+        <FlashcardModulev2 category={category} fetchData={fetchData} />
       </div>
       <style jsx>{`
         .page {
