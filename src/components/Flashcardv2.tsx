@@ -41,7 +41,7 @@ export const Flashcardv2 = (props: FlashcardProps) => {
     }
   }
 
-  const handleRadioChange = (e) => {
+  const handleRadioChange = (e: React.SyntheticEvent) => {
     const target = e.target
     dispatch({type: 'editFlashcard/selected', payload: target.value})
     dispatch({type: 'createFlashcard/setSideA', payload: target.getAttribute('data-sideA')})
@@ -50,44 +50,48 @@ export const Flashcardv2 = (props: FlashcardProps) => {
 
   return (
     <div className='flashcard'>
-      <div className='flashcard-inner' style={style}>
-        <div
+      <label 
+        htmlFor={toggleRadios ? `radio-${id}` : `checkbox-${id}`}
+      >
+        <div className='flashcard-inner' style={style}>
+          <div
             className='flashcard-sideA' 
             onClick={handleClick}
-        >
-          {sideA}
-        </div>
-        <div 
+          >
+            {sideA}
+          </div>
+          <div 
             className='flashcard-sideB' 
             onClick={handleClick}
-        >
-          {sideB}
+          >
+            {sideB}
+          </div>
         </div>
-      </div>
-      {toggleCheckboxes && (
-        <div style={{position: 'absolute', top: 10, right: 10}}>
-          <input
-              type="checkbox"
-              id={`checkbox-${id}`}
-              value={id}
-              defaultChecked={false}
-              onChange={handleCheckedChange}
-          />
-        </div>
-      )}
-    {toggleRadios && (
-      <div style={{position: 'absolute', top: 10, left: 10}}>
-        <input
-            type="radio"
-            id={`radio-${id}`}
-            value={id}
-            data-sideA={sideA}
-            data-sideB={sideB}
-            checked={selectedRadioId === id}
-            onChange={handleRadioChange}
-        />
-      </div>
-    )}
+          {toggleCheckboxes && (
+            <div style={{position: 'absolute', top: 10, right: 10}}>
+              <input
+                  type="checkbox"
+                  id={`checkbox-${id}`}
+                  value={id}
+                  defaultChecked={false}
+                  onChange={handleCheckedChange}
+              />
+            </div>
+          )}
+        {toggleRadios && (
+          <div style={{position: 'absolute', top: 10, left: 10}}>
+            <input
+                type="radio"
+                id={`radio-${id}`}
+                value={id}
+                data-sideA={sideA}
+                data-sideB={sideB}
+                checked={selectedRadioId === id}
+                onChange={handleRadioChange}
+            />
+          </div>
+        )}
+      </label>
     </div>
   )
 }

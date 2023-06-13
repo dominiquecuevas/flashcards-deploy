@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Flashcardv2 } from './Flashcardv2'
-import { useFlashcards, useFlashcardsDispatch } from '../FlashcardsContext'
+import { useFlashcards } from '../FlashcardsContext'
 
 export const FlashcardModulev2 = (props) => {
-  const { category, fetchData } = props
-  const { flashcards, selectedFlashcards, toggleRadios } = useFlashcards()
-  const dispatch = useFlashcardsDispatch()
+  const { fetchData } = props
+  const { flashcards } = useFlashcards()
 
   useEffect(() => {
     fetchData()
@@ -21,14 +20,10 @@ export const FlashcardModulev2 = (props) => {
     return 0;
   })
   const cardSides = flashcards.map(flashcard => (
-    <label 
-      key={flashcard?.id} 
-      htmlFor={toggleRadios ? `radio-${flashcard.id}` : `checkbox-${flashcard.id}`}
-    >
-      <Flashcardv2 
-        flashcard={flashcard}
-      />
-    </label>
+    <Flashcardv2 
+      key={flashcard.id}
+      flashcard={flashcard}
+    />
   ))
   return (
     <div className="flashcard-container">

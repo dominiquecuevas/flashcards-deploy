@@ -35,7 +35,10 @@ export const Formv2 = ({ category, fetchData }) => {
   }
   
   return (
-    <form onSubmit={submitData}>
+    <form 
+      onSubmit={submitData}
+      style={{ display: "flex", flexGrow: 2 }}
+    >
       <input
         autoFocus
         placeholder="Front text"
@@ -43,12 +46,14 @@ export const Formv2 = ({ category, fetchData }) => {
         value={sideA}
         onChange={(e) => dispatch({type: 'createFlashcard/setSideA', payload: e.target.value})}
         ref={inputElement}
+        style={{ flexGrow: 1 }}
       />
       <input
         placeholder="Back text"
         type="text"
         value={sideB}
         onChange={(e) => dispatch({type: 'createFlashcard/setSideB', payload: e.target.value})}
+        style={{ flexGrow: 1 }}
       />
       <input disabled={!sideA || !sideB} type="submit" value={selectedRadioId.length ? "Update" : "Create"} />
     </form>

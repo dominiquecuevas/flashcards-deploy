@@ -45,7 +45,6 @@ function flashcardsReducer(state, action) {
       }
     }
     case 'selectFlashcards/added': {
-      console.log('in added')
       return {
         ...state,
         selectedFlashcards: [...state.selectedFlashcards, action.payload]

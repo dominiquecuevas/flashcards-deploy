@@ -21,22 +21,29 @@ export const DeleteButton = ({ fetchData }) => {
       console.error(error);
     }
   }
-
+  
   return (
     <>
+      <button
+        style={{display: selectedFlashcards.length ? 'inline-block' : 'none'}}
+        onClick={handleDeleteClick}
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 256 256"
+          height="100%"
+        >
+          <rect width="256" height="256" fill="none"/>
+          <path d="M224,56a8,8,0,0,1-8,8h-8V208a16,16,0,0,1-16,16H64a16,16,0,0,1-16-16V64H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,56ZM88,32h80a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16Z"
+            fill='white'
+          />
+        </svg>
+      </button>
       <input 
         type="button" 
         onClick={handleSelectClick} 
         value={!toggleCheckboxes ? 'Select' : 'Cancel'} 
-        // disabled={toggleRadios} 
-      />
-      <input type="button" 
-        style={{display: selectedFlashcards.length ? 'inline-block' : 'none'}}
-        value="Delete" 
-        onClick={handleDeleteClick}
       />
     </>
-
-
   )
 }
