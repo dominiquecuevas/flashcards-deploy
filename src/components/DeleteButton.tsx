@@ -24,9 +24,15 @@ export const DeleteButton = ({ fetchData }) => {
   
   return (
     <>
+      <input 
+        type="button" 
+        onClick={handleSelectClick} 
+        value={!toggleCheckboxes ? 'Select' : 'Cancel'} 
+      />
       <button
-        style={{display: selectedFlashcards.length ? 'inline-block' : 'none'}}
+        style={{display: 'inline-block'}}
         onClick={handleDeleteClick}
+        disabled={!selectedFlashcards.length}
       >
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
@@ -39,11 +45,6 @@ export const DeleteButton = ({ fetchData }) => {
           />
         </svg>
       </button>
-      <input 
-        type="button" 
-        onClick={handleSelectClick} 
-        value={!toggleCheckboxes ? 'Select' : 'Cancel'} 
-      />
     </>
   )
 }

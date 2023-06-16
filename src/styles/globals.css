@@ -87,17 +87,26 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+h2 {
+  text-align: center;
+  padding: 6px;
+}
+
+input, button {
+  margin: 1px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -110,10 +119,48 @@ body {
   background-color: #102a43;
 }
 
+.deck-container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 6px;
+}
+
+.deck {
+  position: relative;
+  background-color: transparent;
+  width: 200px;
+  height: 150px;
+  perspective: 1000px;
+  margin: 12px;
+}
+
+.deck-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  color: #f0f4f8;
+  background-color: #243b53;
+  box-shadow: 0 0 5px #00000073;
+  flex-wrap: wrap;
+  overflow: scroll;
+}
+
+.deck:hover {
+  transform: translate(3px, -3px);
+  transition: 300ms;
+}
+
 .flashcard-container {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .flashcard {
@@ -122,7 +169,7 @@ body {
   width: 200px;
   height: 150px;
   perspective: 1000px;
-  margin: 5px;
+  margin: 6px;
 }
 
 .flashcard-inner {
@@ -148,6 +195,8 @@ body {
   box-shadow: 0 0 5px #00000073;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  flex-wrap: wrap;
+  overflow: scroll;
 }
 
 .flashcard:hover {
@@ -158,4 +207,8 @@ body {
 .flashcard-sideB {
   transform: rotateY(180deg);
   background-color: #334e68;
+}
+
+.flashcard-sideA::-webkit-scrollbar, .flashcard-sideB::-webkit-scrollbar {
+  display: none;
 }

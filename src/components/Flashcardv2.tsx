@@ -84,8 +84,8 @@ export const Flashcardv2 = (props: FlashcardProps) => {
                 type="radio"
                 id={`radio-${id}`}
                 value={id}
-                data-sideA={sideA}
-                data-sideB={sideB}
+                data-sidea={sideA}
+                data-sideb={sideB}
                 checked={selectedRadioId === id}
                 onChange={handleRadioChange}
             />

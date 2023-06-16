@@ -11,7 +11,7 @@ export const Formv2 = ({ category, fetchData }) => {
     try {
       if ( selectedRadioId.length ) {
         const body = { selectedRadioId, sideA, sideB }
-        await fetch(`/api/put`, {
+        await fetch('/api/put', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
@@ -24,7 +24,7 @@ export const Formv2 = ({ category, fetchData }) => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
-        });
+        })
       }
       dispatch({type: 'createFlashcard/cleared'})
       fetchData()
@@ -37,7 +37,7 @@ export const Formv2 = ({ category, fetchData }) => {
   return (
     <form 
       onSubmit={submitData}
-      style={{ display: "flex", flexGrow: 2 }}
+      style={{ display: "flex", flexGrow: 2, flexWrap: 'wrap' }}
     >
       <input
         autoFocus
@@ -55,7 +55,11 @@ export const Formv2 = ({ category, fetchData }) => {
         onChange={(e) => dispatch({type: 'createFlashcard/setSideB', payload: e.target.value})}
         style={{ flexGrow: 1 }}
       />
-      <input disabled={!sideA || !sideB} type="submit" value={selectedRadioId.length ? "Update" : "Create"} />
+      <input 
+        disabled={!sideA || !sideB} 
+        type="submit" 
+        value={selectedRadioId.length ? "Update" : "Create"} 
+      />
     </form>
   )
 }

@@ -5,6 +5,8 @@ const FlashcardsDispatchContext = createContext(null)
 
 const initialFlashcards = {
   flashcards: [],
+  isFetching: false,
+  hasError: false,
   selectedFlashcards: [],
   toggleCheckboxes: false,
   sideA: '',
@@ -38,6 +40,32 @@ export function useFlashcardsDispatch() {
 
 function flashcardsReducer(state, action) {
   switch (action.type) {
+    case 'fetchFlashcards/clear': {
+      return {
+        ...initialFlashcards
+      }
+    }
+    case 'fetchFlashcards/request': {
+      return {
+        ...state,
+        isFetching: true,
+        hasError: false
+      }
+    }
+    case 'fetchFlashcards/success': {
+      return {
+        ...state,
+        isFetching: false,
+        flashcards: [...action.payload]
+      }
+    }
+    case 'fetchFlashcards/failure': {
+      return {
+        ...state,
+        isFetching: false,
+        hasError: true
+      }
+    }
     case 'fetch_flashcards': {
       return {
         ...state,

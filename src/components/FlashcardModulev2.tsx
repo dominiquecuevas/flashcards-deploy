@@ -1,14 +1,8 @@
-import React, { useEffect } from 'react'
 import { Flashcardv2 } from './Flashcardv2'
 import { useFlashcards } from '../FlashcardsContext'
 
-export const FlashcardModulev2 = (props) => {
-  const { fetchData } = props
+export const FlashcardModulev2 = () => {
   const { flashcards } = useFlashcards()
-
-  useEffect(() => {
-    fetchData()
-  }, [])
 
   flashcards.sort((a, b) => {
     if (a.updatedAt < b.updatedAt) {

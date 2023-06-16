@@ -11,8 +11,6 @@ import { CategoriesList } from '../components/CategoriesList'
 const inter = Inter({ subsets: ['latin'] })
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { params } = context
-  const category = params?.category
   let categoriesFeed = []
   const session = await getServerSession(context.req, context.res, authOptions)
   if (!session) {
@@ -49,11 +47,13 @@ export default function Home(props: Props) {
         <title>Flashcards</title>
         <meta name="description" content="Create your own flashcards" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/robot_1f916.png" />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-        <h2>Your Categories</h2>
-        <CategoriesList categoriesFeed={props.categoriesFeed} />
+        <div>
+          <h2>Your Categories</h2>
+          <CategoriesList categoriesFeed={categoriesFeed} />
+        </div>
       </main>
     </Layout>
   )
