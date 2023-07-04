@@ -209,6 +209,24 @@ body {
   background-color: #334e68;
 }
 
-.flashcard-sideA::-webkit-scrollbar, .flashcard-sideB::-webkit-scrollbar {
+div::-webkit-scrollbar {
   display: none;
+}
+
+.category-header {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.category-more {
+  position: relative;
+  display: inline;
+}
+
+.category-dropdown {
+  position: absolute;
+  z-index: 9999;
+  background-color: #334e68;
+  border-radius: 2px;
 }

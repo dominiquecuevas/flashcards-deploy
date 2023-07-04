@@ -1,5 +1,5 @@
 import { Flashcardv2 } from './Flashcardv2'
-import { useFlashcards } from '../FlashcardsContext'
+import { useFlashcards } from '../../FlashcardsContext'
 
 export const FlashcardModulev2 = () => {
   const { flashcards } = useFlashcards()

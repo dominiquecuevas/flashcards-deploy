@@ -2,45 +2,13 @@ import Head from 'next/head'
 import Layout from '../components/Layout'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-import { getServerSession } from 'next-auth/next'
-import { GetServerSideProps } from 'next'
-import { authOptions } from "@/pages/api/auth/[...nextauth]"
-import prisma from '../../lib/prisma'
-import { CategoriesList } from '../components/CategoriesList'
+import { CategoriesProvider } from "@/CategoriesContext"
+import { CategoriesList } from '../components/Category/CategoriesList'
+import { CategoryForm } from "../components/Category/CategoryForm"
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  let categoriesFeed = []
-  const session = await getServerSession(context.req, context.res, authOptions)
-  if (!session) {
-    return {
-      props: { categoriesFeed }
-    }
-  }
-  const response = await prisma.flashcard.findMany({
-    where: {
-      creator: session?.user
-    },
-    distinct: ['category'],
-    select: {
-      category: true
-    }
-  })
-  categoriesFeed = await JSON.parse(JSON.stringify(response))
-  categoriesFeed = categoriesFeed.map((categoryObject) => categoryObject.category)
-  return {
-    props: { categoriesFeed }
-  };
-}
-
-type Props = {
-  categoriesFeed: string[]
-}
-
-export default function Home(props: Props) {
-  const { categoriesFeed } = props
-
+export default function Home() {
   return (
     <Layout>
       <Head>
@@ -52,9 +20,18 @@ export default function Home(props: Props) {
       <main className={`${styles.main} ${inter.className}`}>
         <div>
           <h2>Your Categories</h2>
-          <CategoriesList categoriesFeed={categoriesFeed} />
+          <CategoriesList />
+          <CategoryForm />
         </div>
       </main>
     </Layout>
+  )
+}
+
+Home.getLayout = function getLayout(page) {
+  return (
+    <CategoriesProvider>
+      {page}
+    </CategoriesProvider>
   )
 }

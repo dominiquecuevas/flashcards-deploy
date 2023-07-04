@@ -1,5 +1,5 @@
 import React, { useState, FormEventHandler } from 'react'
-import { useFlashcards, useFlashcardsDispatch } from '../FlashcardsContext'
+import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 
 export type FlashcardProps = {
   flashcard: {
@@ -8,9 +8,7 @@ export type FlashcardProps = {
     creatorId?: string
     id: string
     sideA: string
-    sideAType?: string
     sideB: string
-    sideBType?: string
     updatedAt: Date
   }
 }

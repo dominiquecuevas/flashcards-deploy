@@ -1,6 +1,6 @@
-import { useFlashcards, useFlashcardsDispatch } from '../FlashcardsContext'
+import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 
-export const EditButton = ({ fetchData }) => {
+export const EditButton = () => {
   const { toggleRadios } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
 

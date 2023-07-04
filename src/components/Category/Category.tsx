@@ -1,5 +1,3 @@
-
-
 export const Category = (props) => {
   const { category } = props
   return (

@@ -1,4 +1,4 @@
-import { useFlashcards, useFlashcardsDispatch } from '../FlashcardsContext'
+import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 
 export const DeleteButton = ({ fetchData }) => {
   const { selectedFlashcards, toggleCheckboxes } = useFlashcards()
@@ -10,16 +10,22 @@ export const DeleteButton = ({ fetchData }) => {
   }
 
   const handleDeleteClick = async () => {
-    try {
-      await fetch(`/api/delete?ids=${selectedFlashcards}`, {
-        method: 'DELETE'
-      })
-      fetchData()
-      dispatch({type: 'selectFlashcards/toggled'})
-      dispatch({type: 'selectFlashcards/cleared'})
-    } catch (error) {
-      console.error(error);
-    }
+    await fetch(`/api/flashcards?ids=${selectedFlashcards}`, {
+      method: 'DELETE'
+    })
+    .then((res) => {
+      if (res.ok) {
+      } else {
+        alert('Something went wrong.')
+        throw res
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    fetchData()
+    dispatch({type: 'selectFlashcards/toggled'})
+    dispatch({type: 'selectFlashcards/cleared'})
   }
   
   return (

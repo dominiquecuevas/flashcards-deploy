@@ -1,8 +1,8 @@
 import React, { useRef } from "react"
-import { useFlashcards, useFlashcardsDispatch } from '../FlashcardsContext'
+import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 
 export const Formv2 = ({ category, fetchData }) => {
-  const { sideA, sideB, selectedRadioId } = useFlashcards()
+  const { sideA, sideB, selectedRadioId, categoryId } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
   const inputElement = useRef<HTMLInputElement>(null)
 
@@ -11,7 +11,7 @@ export const Formv2 = ({ category, fetchData }) => {
     try {
       if ( selectedRadioId.length ) {
         const body = { selectedRadioId, sideA, sideB }
-        await fetch('/api/put', {
+        await fetch('/api/flashcards', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
@@ -19,8 +19,8 @@ export const Formv2 = ({ category, fetchData }) => {
         dispatch({type: 'editFlashcard/toggled'})
         dispatch({type: 'editFlashcard/cleared'})
       } else {
-        const body = { sideA, sideB, category: category };
-        await fetch('/api/post', {
+        const body = { sideA, sideB, category: category, categoryId };
+        await fetch('/api/flashcards', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),

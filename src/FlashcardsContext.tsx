@@ -1,9 +1,13 @@
-import { createContext, ReactNode, useContext, useEffect, useReducer} from 'react'
+import { createContext, useContext, useReducer} from 'react'
 
 const FlashcardsContext = createContext(null)
 const FlashcardsDispatchContext = createContext(null)
 
 const initialFlashcards = {
+  category: '',
+  categoryId: '',
+  toggleCategoryEdit: false,
+  toggleCategoryRename: false,
   flashcards: [],
   isFetching: false,
   hasError: false,
@@ -40,9 +44,28 @@ export function useFlashcardsDispatch() {
 
 function flashcardsReducer(state, action) {
   switch (action.type) {
-    case 'fetchFlashcards/clear': {
+    case 'editCategory/toggled' : {
       return {
-        ...initialFlashcards
+        ...state,
+        toggleCategoryEdit: !state.toggleCategoryEdit
+      }
+    }
+    case 'editCategory/renameToggled': {
+      return {
+        ...state,
+        toggleCategoryRename: !state.toggleCategoryRename
+      }
+    }
+    case 'editCategory/setName': {
+      return {
+        ...state,
+        category: action.payload
+      }
+    }
+    case 'editCategory/setCategoryId': {
+      return {
+        ...state,
+        categoryId: action.payload
       }
     }
     case 'fetchFlashcards/request': {
@@ -66,12 +89,6 @@ function flashcardsReducer(state, action) {
         hasError: true
       }
     }
-    case 'fetch_flashcards': {
-      return {
-        ...state,
-        flashcards: [...action.payload]
-      }
-    }
     case 'selectFlashcards/added': {
       return {
         ...state,
@@ -81,7 +98,7 @@ function flashcardsReducer(state, action) {
     case 'selectFlashcards/removed': {
       return {
         ...state,
-        selectedFlashcards: state.selectedFlashcards.filter((id) => 
+        selectedFlashcards: state.selectedFlashcards.filter((id: String) => 
         id !== action.payload)
       }
     }
