@@ -41,7 +41,7 @@ export const CategoriesList = () => {
 
   return (
     <div className="deck-container">
-      {isFetching && !decks ? "Loading..." : decks}
+      {isFetching ? "Loading..." : decks}
     </div>
   )
 }

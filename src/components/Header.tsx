@@ -1,4 +1,3 @@
-// Header.tsx
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -14,7 +13,12 @@ const Header: React.FC = () => {
     <div className="left">
       <Link legacyBehavior href="/">
         <a className="bold" data-active={isActive('/')}>
-          Feed
+          Home
+        </a>
+      </Link>
+      <Link legacyBehavior href="/categories">
+        <a className="bold" data-active={isActive('/categories')}>
+          Categories
         </a>
       </Link>
       <style jsx>{`
@@ -46,7 +50,12 @@ const Header: React.FC = () => {
       <div className="left">
         <Link legacyBehavior href="/">
           <a className="bold" data-active={isActive('/')}>
-            Feed
+            Home
+          </a>
+        </Link>
+        <Link legacyBehavior href="/categories">
+          <a className="bold" data-active={isActive('/categories')}>
+            Categories
           </a>
         </Link>
         <style jsx>{`
@@ -118,7 +127,12 @@ const Header: React.FC = () => {
       <div className="left">
         <Link legacyBehavior href="/">
           <a className="bold" data-active={isActive('/')}>
-            Feed
+            Home
+          </a>
+        </Link>
+        <Link legacyBehavior href="/categories">
+          <a className="bold" data-active={isActive('/categories')}>
+            Categories
           </a>
         </Link>
         <style jsx>{`

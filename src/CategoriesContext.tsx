@@ -49,7 +49,7 @@ function categoriesReducer(state, action) {
         categories: [...action.payload]
       }
     }
-    case 'fetchCategories/failed': {
+    case 'fetchCategories/failure': {
       return {
         ...state,
         isFetching: false,
