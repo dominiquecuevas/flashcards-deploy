@@ -159,7 +159,7 @@ const Header: React.FC = () => {
     right = (
       <div className="right">
         <p>
-          {session.user.name}
+          {session?.user?.name}
         </p>
         <button onClick={() => signOut({ callbackUrl: '/'})}>
           <a>Log out</a>
