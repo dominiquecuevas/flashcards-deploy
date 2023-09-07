@@ -1,7 +1,23 @@
 import { createContext, useContext, useReducer} from 'react'
 
-const FlashcardsContext = createContext(null)
-const FlashcardsDispatchContext = createContext(null)
+type FlashcardsType = {
+  category?: string
+  categoryId?: string
+  toggleCategoryEdit?: boolean
+  toggleCategoryRename?: boolean
+  flashcards?: Array<any>
+  isFetching?: boolean
+  hasError?: boolean
+  selectedFlashcards?: Array<any>
+  toggleCheckboxes?: boolean
+  sideA?: string
+  sideB?: string
+  toggleRadios?: boolean
+  selectedRadioId?: string
+}
+
+const FlashcardsContext = createContext<FlashcardsType>({} as FlashcardsType)
+const FlashcardsDispatchContext = createContext<any>(null)
 
 const initialFlashcards = {
   category: '',
@@ -19,7 +35,7 @@ const initialFlashcards = {
   selectedRadioId: ''
 }
 
-export function FlashcardsProvider ({ children }) {
+export function FlashcardsProvider ({ children } : { children: React.ReactNode }) {
   const [flashcards, dispatch] = useReducer(
     flashcardsReducer,
     initialFlashcards
@@ -42,7 +58,7 @@ export function useFlashcardsDispatch() {
   return useContext(FlashcardsDispatchContext)
 }
 
-function flashcardsReducer(state, action) {
+function flashcardsReducer(state: FlashcardsType, action: any) {
   switch (action.type) {
     case 'editCategory/toggled' : {
       return {
@@ -92,13 +108,13 @@ function flashcardsReducer(state, action) {
     case 'selectFlashcards/added': {
       return {
         ...state,
-        selectedFlashcards: [...state.selectedFlashcards, action.payload]
+        selectedFlashcards: [...state.selectedFlashcards || [], action.payload]
       }
     }
     case 'selectFlashcards/removed': {
       return {
         ...state,
-        selectedFlashcards: state.selectedFlashcards.filter((id: String) => 
+        selectedFlashcards: state.selectedFlashcards?.filter((id: String) => 
         id !== action.payload)
       }
     }

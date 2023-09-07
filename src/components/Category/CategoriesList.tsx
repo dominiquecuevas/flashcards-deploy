@@ -3,9 +3,6 @@ import { Category } from './Category'
 import Link from 'next/link'
 import { useCategories, useCategoriesDispatch } from "../../CategoriesContext"
 
-export type Props = {
-  categoriesFeed: string[]
-}
 export const CategoriesList = () => {
   const { categories, isFetching } = useCategories()
   const dispatch = useCategoriesDispatch()
@@ -29,7 +26,7 @@ export const CategoriesList = () => {
   useEffect(() => {
     fetchCategoryFeedData()
   }, [fetchCategoryFeedData])
-  const decks = categories.map((category) => (
+  const decks = categories?.map((category) => (
     <Link 
       key={category.name} 
       href={`/flashcards/${encodeURIComponent(category.name)}`}

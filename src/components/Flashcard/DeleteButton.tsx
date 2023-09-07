@@ -2,7 +2,7 @@ import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 
-export const DeleteButton = ({ fetchData }) => {
+export const DeleteButton = ({ fetchData } : { fetchData: any}) => {
   const { selectedFlashcards, toggleCheckboxes } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
   const router = useRouter()
@@ -45,7 +45,7 @@ export const DeleteButton = ({ fetchData }) => {
       <button
         style={{display: 'inline-block'}}
         onClick={handleDeleteClick}
-        disabled={!selectedFlashcards.length}
+        disabled={!selectedFlashcards?.length}
       >
         <svg 
           xmlns="http://www.w3.org/2000/svg" 

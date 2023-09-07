@@ -1,4 +1,4 @@
-import React, { useState, FormEventHandler } from 'react'
+import { useState, SyntheticEvent } from 'react'
 import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 
 export type FlashcardProps = {
@@ -30,7 +30,7 @@ export const Flashcardv2 = (props: FlashcardProps) => {
     }
   }
 
-  const handleCheckedChange = (e: React.SyntheticEvent) => {
+  const handleCheckedChange = (e: SyntheticEvent) => {
     const target = e.target as HTMLInputElement
     if (target.checked) {
       dispatch({type: 'selectFlashcards/added', payload: target.value})
@@ -39,7 +39,7 @@ export const Flashcardv2 = (props: FlashcardProps) => {
     }
   }
 
-  const handleRadioChange = (e: React.SyntheticEvent) => {
+  const handleRadioChange = (e: SyntheticEvent) => {
     const target = e.target
     dispatch({type: 'editFlashcard/selected', payload: target.value})
     dispatch({type: 'createFlashcard/setSideA', payload: target.getAttribute('data-sideA')})

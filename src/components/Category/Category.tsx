@@ -1,4 +1,4 @@
-export const Category = (props) => {
+export const Category = (props: { category: string}) => {
   const { category } = props
   return (
     <div className="deck">

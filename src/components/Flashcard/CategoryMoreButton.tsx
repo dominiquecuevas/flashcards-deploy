@@ -2,8 +2,9 @@ import Link from "next/link"
 import { useFlashcards, useFlashcardsDispatch } from "../../FlashcardsContext"
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
+import { SyntheticEvent } from "react"
 
-export const CategoryMoreButton = (props) => {
+export const CategoryMoreButton = (props: { categoryQuery: string }) => {
   const { categoryQuery } = props
   const { categoryId, toggleCategoryEdit, toggleCategoryRename } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
@@ -20,7 +21,7 @@ export const CategoryMoreButton = (props) => {
     }
   }
 
-  const handleClickRename = async (event) => {
+  const handleClickRename = async (event: SyntheticEvent) => {
     event.preventDefault()
     if ( !session ) {
       await router.push('/api/auth/signin')
@@ -29,7 +30,7 @@ export const CategoryMoreButton = (props) => {
     dispatch({type: 'editCategory/toggled'})
   }
 
-  const handleClickDelete = async (event) => {
+  const handleClickDelete = async (event: SyntheticEvent) => {
     event.preventDefault()
     if ( !session ) {
       await router.push('/api/auth/signin')

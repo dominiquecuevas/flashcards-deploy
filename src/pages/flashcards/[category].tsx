@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react"
+import React, { ReactNode, useCallback, useEffect } from "react"
 import { GetServerSideProps } from "next"
 import Layout from "../../components/Layout"
 import { FlashcardModulev2 } from '../../components/Flashcard/FlashcardModulev2'
@@ -75,7 +75,7 @@ const Category = (props: Props) => {
   )
 }
 
-Category.getLayout = function getLayout(page) {
+Category.getLayout = function getLayout(page: ReactNode) {
   return (
     <FlashcardsProvider>
       {page}

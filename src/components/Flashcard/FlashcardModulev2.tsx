@@ -4,7 +4,7 @@ import { useFlashcards } from '../../FlashcardsContext'
 export const FlashcardModulev2 = () => {
   const { flashcards } = useFlashcards()
 
-  flashcards.sort((a, b) => {
+  flashcards?.sort((a, b) => {
     if (a.updatedAt < b.updatedAt) {
       return 1;
     }
@@ -13,7 +13,7 @@ export const FlashcardModulev2 = () => {
     }
     return 0;
   })
-  const cardSides = flashcards.map(flashcard => (
+  const cardSides = flashcards?.map(flashcard => (
     <Flashcardv2 
       key={flashcard.id}
       flashcard={flashcard}

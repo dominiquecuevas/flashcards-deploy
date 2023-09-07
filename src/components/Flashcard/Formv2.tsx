@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import { useRef, SyntheticEvent } from "react"
 import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
@@ -10,7 +10,7 @@ export const Formv2 = ({ category, fetchData }) => {
   const router = useRouter()
   const { data: session } = useSession()
 
-  const submitData = async (e: React.SyntheticEvent) => {
+  const submitData = async (e: SyntheticEvent) => {
     e.preventDefault();
     if ( !session ) {
       await router.push('/api/auth/signin')

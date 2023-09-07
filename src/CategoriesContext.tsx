@@ -1,7 +1,14 @@
-import { createContext, useContext, useReducer} from 'react'
+import { createContext, ReactNode, useContext, useReducer } from 'react'
 
-const CategoriesContext = createContext(null)
-const CategoriesDispatchContext = createContext(null)
+type CategoriesType = {
+  categories?: Array<any>
+  isFetching?: boolean
+  hasError?: boolean
+  category?: string
+}
+
+const CategoriesContext = createContext<CategoriesType>({} as CategoriesType)
+const CategoriesDispatchContext = createContext<any>(null)
 
 const initialCategories = {
   categories: [],
@@ -10,7 +17,7 @@ const initialCategories = {
   category: ''
 }
 
-export function CategoriesProvider ({ children }) {
+export function CategoriesProvider ({ children } : { children: ReactNode}) {
   const [categories, dispatch] = useReducer(
     categoriesReducer,
     initialCategories
@@ -33,7 +40,7 @@ export function useCategoriesDispatch() {
   return useContext(CategoriesDispatchContext)
 }
 
-function categoriesReducer(state, action) {
+function categoriesReducer(state: CategoriesType, action: any) {
   switch (action.type) {
     case 'fetchCategories/request': {
       return {
