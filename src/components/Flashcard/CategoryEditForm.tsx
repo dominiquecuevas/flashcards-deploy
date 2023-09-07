@@ -1,14 +1,19 @@
 import { useFlashcards, useFlashcardsDispatch } from "../../FlashcardsContext"
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 export const CategoryEditForm = (props) => {
   const { categoryQuery } = props
   const { category, categoryId } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
   const router = useRouter()
+  const { data: session } = useSession()
 
   const submitData = async (e) => {
     e.preventDefault()
+    if ( !session ) {
+      await router.push('/api/auth/signin')
+    }
     dispatch({type: 'editCategory/renameToggled'})
     if ( category.length ) {
       const body = { categoryId, category }

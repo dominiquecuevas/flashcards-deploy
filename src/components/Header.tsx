@@ -161,7 +161,7 @@ const Header: React.FC = () => {
         <p>
           {session.user.name}
         </p>
-        <button onClick={() => signOut()}>
+        <button onClick={() => signOut({ callbackUrl: '/'})}>
           <a>Log out</a>
         </button>
         <style jsx>{`

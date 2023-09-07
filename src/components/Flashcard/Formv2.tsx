@@ -1,13 +1,20 @@
 import React, { useRef } from "react"
 import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 export const Formv2 = ({ category, fetchData }) => {
   const { sideA, sideB, selectedRadioId, categoryId } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
   const inputElement = useRef<HTMLInputElement>(null)
+  const router = useRouter()
+  const { data: session } = useSession()
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    if ( !session ) {
+      await router.push('/api/auth/signin')
+    }
     try {
       if ( selectedRadioId.length ) {
         const body = { selectedRadioId, sideA, sideB }

@@ -7,7 +7,7 @@ export default function Categories() {
   return (
     <Layout>
       <div>
-        <h2>Your Categories</h2>
+        <h2>Categories</h2>
         <CategoryForm />
         <CategoriesList />
       </div>

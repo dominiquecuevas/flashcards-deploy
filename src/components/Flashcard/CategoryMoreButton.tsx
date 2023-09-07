@@ -1,12 +1,14 @@
 import Link from "next/link"
 import { useFlashcards, useFlashcardsDispatch } from "../../FlashcardsContext"
-import { useRouter } from "next/router"
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 export const CategoryMoreButton = (props) => {
   const { categoryQuery } = props
   const { categoryId, toggleCategoryEdit, toggleCategoryRename } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
   const router = useRouter()
+  const { data: session } = useSession()
 
   const handleClick = () => {
     if ( !toggleCategoryRename ) {
@@ -18,14 +20,20 @@ export const CategoryMoreButton = (props) => {
     }
   }
 
-  const handleClickRename = (event) => {
+  const handleClickRename = async (event) => {
     event.preventDefault()
+    if ( !session ) {
+      await router.push('/api/auth/signin')
+    }
     dispatch({type: 'editCategory/renameToggled'})
     dispatch({type: 'editCategory/toggled'})
   }
 
   const handleClickDelete = async (event) => {
     event.preventDefault()
+    if ( !session ) {
+      await router.push('/api/auth/signin')
+    }
     dispatch({type: 'editCategory/toggled'})
     if (confirm(`Delete "${categoryQuery}" category and all related flashcards?`)) {
       await fetch(`/api/category?categoryId=${categoryId}`, {

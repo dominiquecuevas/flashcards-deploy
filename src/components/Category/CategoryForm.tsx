@@ -1,16 +1,21 @@
 import { useCategories, useCategoriesDispatch } from "@/CategoriesContext"
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 export const CategoryForm = () => {
   const { category } = useCategories()
   const dispatch = useCategoriesDispatch()
   const router = useRouter()
+  const { data: session } = useSession()
 
   const handleChange = (e) => {
     dispatch({type: 'createCategory', payload: e.target.value})
   }
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
+    if ( !session ) {
+      await router.push('/api/auth/signin')
+    }
     try {
       const body = { category: category }
       await fetch('/api/category', {
@@ -18,10 +23,16 @@ export const CategoryForm = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
+      .then(res => {
+        if (res.ok) {
+          router.push(`/flashcards/${encodeURIComponent(category)}`)
+        } else {
+          throw res
+        }
+      })
     } catch (error) {
       console.log(error)
     }
-    router.push(`/flashcards/${encodeURIComponent(category)}`)
   }
   return (
     <form 

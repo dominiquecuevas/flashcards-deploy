@@ -30,7 +30,8 @@ const Category = (props: Props) => {
   const dispatch = useFlashcardsDispatch()
   const fetchData = async () => {
     dispatch({type: 'editCategory/setName', payload: categoryQuery})
-    await fetch(`/api/category/?category=${categoryQuery}`)
+    dispatch({type: 'fetchFlashcards/request'})
+    await fetch(`/api/flashcards/?category=${categoryQuery}`)
       .then(res => {
         if (res.ok) {
           return res.json()
@@ -39,36 +40,14 @@ const Category = (props: Props) => {
           throw res
         }
       })
-      .then(data => {
-        if ( data ) {
-          dispatch({type: 'editCategory/setCategoryId', payload: data.id})
-          return data.id
-        } else {
-          throw res
-        }
-      })
-      .then(categoryId => {
-        dispatch({type: 'fetchFlashcards/request'})
-        fetch(`/api/flashcards/?categoryId=${categoryId}`)
-          .then(res => {
-            if (res.ok) {
-              return res.json()
-            } else {
-              alert('Something went wrong.')
-              throw res
-            }
-          })
-        .then(data => {
-          dispatch({type: 'fetchFlashcards/success', payload: data})
-        })
-        .catch(error => {
-          console.log(error)
-          dispatch({type: 'fetchFlashcards/failure'})
-        })
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    .then(data => {
+      dispatch({type: 'editCategory/setCategoryId', payload: data.category?.id || ''})
+      dispatch({type: 'fetchFlashcards/success', payload: data.flashcards})
+    })
+    .catch(error => {
+      console.log(error)
+      dispatch({type: 'fetchFlashcards/failure'})
+    })
   }
 
   useEffect(() => {

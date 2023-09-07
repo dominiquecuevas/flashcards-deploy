@@ -5,15 +5,26 @@ import { NextApiRequest, NextApiResponse,  } from "next/types"
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const session: SessionWithCallbacks | null = await getServerSession(req, res, authOptions)
-  if ( !session?.userId ) {
+  if ( !session && req.method !== 'GET') {
     return res.status(401).json([])
   }
   if (req.method == 'GET') {
-    const result = await prisma.category.findMany({
-      where: {
-        creatorId: session?.userId
-      }
-    })
+    let result
+    if (!session) {
+      result = await prisma.category.findMany({
+        where: {
+          creatorId: process.env.USER_ID,
+          name: 'French'
+        }
+      })
+    } else {
+      result = await prisma.category.findMany({
+        where: {
+          creatorId: session?.userId
+        }
+      })
+    }
     res.status(200).json(result)
   }
+
 }

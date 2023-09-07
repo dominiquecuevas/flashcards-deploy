@@ -1,8 +1,12 @@
 import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 export const DeleteButton = ({ fetchData }) => {
   const { selectedFlashcards, toggleCheckboxes } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
+  const router = useRouter()
+  const { data: session } = useSession()
 
   const handleSelectClick = () => {
     dispatch({type: 'selectFlashcards/toggled'})
@@ -10,6 +14,9 @@ export const DeleteButton = ({ fetchData }) => {
   }
 
   const handleDeleteClick = async () => {
+    if ( !session ) {
+      await router.push('/api/auth/signin')
+    }
     await fetch(`/api/flashcards?ids=${selectedFlashcards}`, {
       method: 'DELETE'
     })

@@ -5,20 +5,26 @@ import { NextApiRequest, NextApiResponse } from "next/types"
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const session: SessionWithCallbacks | null = await getServerSession(req, res, authOptions);
-  if ( session === null ) {
+  if ( !session && req.method !== 'GET') {
     return res.status(401).json([])
   }
   if ( req.method === 'GET' ) {
-    const { categoryId } = req.query
+    const { category } = req.query
+    const categoryData = await prisma.category.findFirst({
+      where: {
+        creatorId: session?.userId || process.env.USER_ID,
+        name: category
+      }
+    })
     const feed = await prisma.flashcard.findMany({
       where: {
-        creatorId: session.userId,
+        creatorId: session?.userId || process.env.USER_ID,
         category: {
-          id: categoryId
+          name: category
         }
       }
     })
-    res.status(200).json(feed)
+    res.status(200).json({category: categoryData, flashcards: feed})
   } else if ( req.method === 'POST' ) {
     const { sideA, sideB, category, categoryId } = req.body
     const result = await prisma.flashcard.create({
@@ -38,7 +44,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         },
         creator: { connect : { id: session.userId } } 
       },
-    });
+    })
     res.json(result)
   } else if ( req.method === 'PUT' ) {
     const { selectedRadioId, sideA, sideB } = req.body
