@@ -40,7 +40,7 @@ export const Flashcardv2 = (props: FlashcardProps) => {
   }
 
   const handleRadioChange = (e: SyntheticEvent) => {
-    const target = e.target
+    const target = e.target as HTMLInputElement
     dispatch({type: 'editFlashcard/selected', payload: target.value})
     dispatch({type: 'createFlashcard/setSideA', payload: target.getAttribute('data-sideA')})
     dispatch({type: 'createFlashcard/setSideB', payload: target.getAttribute('data-sideB')})
