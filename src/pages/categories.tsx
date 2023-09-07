@@ -2,6 +2,7 @@ import Layout from '../components/Layout'
 import { CategoriesProvider } from "@/CategoriesContext"
 import { CategoriesList } from '../components/Category/CategoriesList'
 import { CategoryForm } from "../components/Category/CategoryForm"
+import { ReactNode } from 'react'
 
 export default function Categories() {
   return (
@@ -15,7 +16,7 @@ export default function Categories() {
   )
 }
 
-Categories.getLayout = function getLayout(page) {
+Categories.getLayout = function getLayout(page: ReactNode) {
   return (
     <CategoriesProvider>
       {page}

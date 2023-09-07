@@ -63,7 +63,7 @@ const Category = (props: Props) => {
           <CategoryMoreButton categoryQuery={categoryQuery} />
         </div>
         <div style={{display: 'flex', flexWrap: 'wrap', padding: '6px', maxWidth: '860px', margin: 'auto'}}>
-          <Formv2 category={category} fetchData={fetchData} />
+          <Formv2 category={category || ''} fetchData={fetchData} />
           <EditButton />
           <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'end'}}>
             <DeleteButton fetchData={fetchData} />

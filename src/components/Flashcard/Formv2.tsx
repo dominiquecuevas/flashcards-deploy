@@ -65,7 +65,7 @@ export const Formv2 = ({ category, fetchData } : { category: string, fetchData: 
       <input 
         disabled={!sideA || !sideB} 
         type="submit" 
-        value={selectedRadioId.length ? "Update" : "Create"} 
+        value={selectedRadioId?.length ? "Update" : "Create"} 
       />
     </form>
   )
