@@ -13,7 +13,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     const result = await prisma.category.findFirst({
       where: {
         creatorId: session?.userId,
-        name: category
+        name: category as string
       }
     })
     res.json(result)
@@ -51,7 +51,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     const { categoryId } = req.query
     const result = await prisma.category.delete({
       where: {
-        id: categoryId
+        id: categoryId as string
       }
     })
     res.json(result)

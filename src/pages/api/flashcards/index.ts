@@ -13,14 +13,14 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     const categoryData = await prisma.category.findFirst({
       where: {
         creatorId: session?.userId || process.env.USER_ID,
-        name: category
+        name: category as string
       }
     })
     const feed = await prisma.flashcard.findMany({
       where: {
         creatorId: session?.userId || process.env.USER_ID,
         category: {
-          name: category
+          name: category as string
         }
       }
     })
@@ -38,11 +38,11 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             },
             create: {
               name: category,
-              creator: { connect : { id: session.userId } }
+              creator: { connect : { id: session?.userId } }
             }
           }
         },
-        creator: { connect : { id: session.userId } } 
+        creator: { connect : { id: session?.userId } } 
       },
     })
     res.json(result)
@@ -60,7 +60,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     res.json(result)
   } else if ( req.method === 'DELETE' ) {
   const { ids } = req.query
-  const idsArray = ids?.split(',')
+  const idsArray = (ids as string).split(',')
   const flashcards = await prisma.flashcard.deleteMany({
     where: {
       id: {in: idsArray},
