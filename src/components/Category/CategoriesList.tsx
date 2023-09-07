@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Category } from './Category'
 import Link from 'next/link'
 import { useCategories, useCategoriesDispatch } from "../../CategoriesContext"
@@ -9,7 +9,7 @@ export type Props = {
 export const CategoriesList = () => {
   const { categories, isFetching } = useCategories()
   const dispatch = useCategoriesDispatch()
-  const fetchCategoryFeedData = () => {
+  const fetchCategoryFeedData = useCallback(() => {
     dispatch({type: 'fetchCategories/request'})
     fetch('/api/categories')
       .then(res => {
@@ -25,10 +25,10 @@ export const CategoriesList = () => {
       .catch(error => {
         dispatch({type: 'fetchCategories/failure'})
       })
-  }
+  }, [dispatch])
   useEffect(() => {
     fetchCategoryFeedData()
-  }, [])
+  }, [fetchCategoryFeedData])
   const decks = categories.map((category) => (
     <Link 
       key={category.name} 

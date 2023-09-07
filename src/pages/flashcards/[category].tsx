@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useCallback, useEffect } from "react"
 import { GetServerSideProps } from "next"
 import Layout from "../../components/Layout"
 import { FlashcardModulev2 } from '../../components/Flashcard/FlashcardModulev2'
@@ -28,7 +28,7 @@ const Category = (props: Props) => {
   const { categoryQuery } = props
   const { isFetching, category, toggleCategoryRename } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     dispatch({type: 'editCategory/setName', payload: categoryQuery})
     dispatch({type: 'fetchFlashcards/request'})
     await fetch(`/api/flashcards/?category=${categoryQuery}`)
@@ -48,11 +48,11 @@ const Category = (props: Props) => {
       console.log(error)
       dispatch({type: 'fetchFlashcards/failure'})
     })
-  }
+  }, [categoryQuery, dispatch])
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [fetchData])
 
   return (
     <Layout>
