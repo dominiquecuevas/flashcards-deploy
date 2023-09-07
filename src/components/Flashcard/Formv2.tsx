@@ -16,7 +16,7 @@ export const Formv2 = ({ category, fetchData } : { category: string, fetchData: 
       await router.push('/api/auth/signin')
     }
     try {
-      if ( selectedRadioId.length ) {
+      if ( selectedRadioId?.length ) {
         const body = { selectedRadioId, sideA, sideB }
         await fetch('/api/flashcards', {
           method: 'PUT',
