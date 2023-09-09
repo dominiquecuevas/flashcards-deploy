@@ -12,20 +12,16 @@ export interface SessionWithCallbacks extends Session {
 export const authOptions: NextAuthOptions = {
   providers: [
     GitHubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
+      clientId: (process.env.NODE_ENV === 'production' ? 
+        process.env.GITHUB_ID : process.env.GITHUB_ID_DEV) as string,
+      clientSecret: (process.env.NODE_ENV === 'production' ? 
+        process.env.GITHUB_SECRET : process.env.GITHUB_SECRET_DEV) as string,
     }),
   ],
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async session({
-      session, 
-      user
-    }: {
-      session: SessionWithCallbacks, 
-      user: AdapterUser
-    }) {
+    async session({session, user} : {session: SessionWithCallbacks, user: AdapterUser}) {
       session.userId = user.id
       return session
     }

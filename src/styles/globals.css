@@ -143,6 +143,8 @@ body {
   box-shadow: 0 0 5px #00000073;
   flex-wrap: wrap;
   overflow: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .deck:hover {
@@ -191,6 +193,8 @@ body {
   backface-visibility: hidden;
   flex-wrap: wrap;
   overflow: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .flashcard:hover {
@@ -223,4 +227,8 @@ div::-webkit-scrollbar {
   z-index: 9999;
   background-color: #334e68;
   border-radius: 2px;
+}
+
+nav {
+  padding: 8px;
 }
