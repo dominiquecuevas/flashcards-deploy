@@ -25,6 +25,9 @@ export const authOptions: NextAuthOptions = {
       session.userId = user.id
       return session
     }
+  },
+  theme: {
+    colorScheme: 'dark',
   }
 }
 
