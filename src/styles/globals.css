@@ -1,9 +1,3 @@
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -160,7 +154,7 @@ nav {
 
 .left {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .left a[data-active='true'] {
@@ -171,5 +165,11 @@ nav {
   display: flex;
   flex-grow: 1;
   justify-content: flex-end;
-  gap: 1rem;
+  gap: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark), (prefers-color-scheme: light) {
+  html {
+    color-scheme: dark;
+  }
 }
