@@ -64,6 +64,7 @@ export const CategoryMoreButton = (props: { categoryQuery: string }) => {
             Rename
           </p>
           </Link>
+          <hr style={{width : '100%'}} />
           <Link href="" onClick={handleClickDelete}>
           <p>
             Delete
