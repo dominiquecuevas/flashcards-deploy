@@ -82,7 +82,7 @@ const Header: React.FC = () => {
             alt="avatar" 
             width={48} 
             height={48} 
-            style={{height: '1rem', width: '1rem', borderRadius: '1rem'}}
+            style={{height: '1.5rem', width: '1.5rem', borderRadius: '1rem'}}
           />
         )}
         <input type="submit" value="Log out" onClick={() => signOut({ callbackUrl: '/'})}/>
