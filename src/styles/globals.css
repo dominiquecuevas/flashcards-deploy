@@ -161,6 +161,7 @@ nav {
 .left {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
 }
 
 .left a[data-active='true'] {
