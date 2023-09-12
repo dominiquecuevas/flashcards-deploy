@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -75,9 +76,15 @@ const Header: React.FC = () => {
     );
     right = (
       <div className="right">
-        <p>
-          {session?.user?.name}
-        </p>
+        {session?.user?.image && (
+          <Image 
+            src={session.user?.image || ''} 
+            alt="avatar" 
+            width={48} 
+            height={48} 
+            style={{height: '1rem', width: '1rem', borderRadius: '1rem'}}
+          />
+        )}
         <input type="submit" value="Log out" onClick={() => signOut({ callbackUrl: '/'})}/>
       </div>
     );
