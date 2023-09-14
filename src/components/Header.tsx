@@ -9,14 +9,16 @@ const Header: React.FC = () => {
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
-  const { data: session, status } = useSession();
-  let left = (
+  const { data: session } = useSession();
+
+  const handleClickLogout = () => {
+    if ( confirm('Are you sure you want to log out?') ) {
+      signOut({ callbackUrl: '/'})
+    }
+  }
+
+  const left = (
     <div className="left">
-      <Link legacyBehavior href="/">
-        <a className="bold" data-active={isActive('/')}>
-          Home
-        </a>
-      </Link>
       <Link legacyBehavior href="/categories">
         <a className="bold" data-active={isActive('/categories')}>
           Categories
@@ -27,28 +29,6 @@ const Header: React.FC = () => {
 
   let right = null;
 
-  if (status === 'loading') {
-    left = (
-      <div className="left">
-        <Link legacyBehavior href="/">
-          <a className="bold" data-active={isActive('/')}>
-            Home
-          </a>
-        </Link>
-        <Link legacyBehavior href="/categories">
-          <a className="bold" data-active={isActive('/categories')}>
-            Categories
-          </a>
-        </Link>
-      </div>
-    );
-    right = (
-      <div className="right">
-        <p>Validating session ...</p>
-      </div>
-    );
-  }
-
   if (!session) {
     right = (
       <div className="right">
@@ -57,23 +37,7 @@ const Header: React.FC = () => {
         </Link>
       </div>
     );
-  }
-
-  if (session) {
-    left = (
-      <div className="left">
-        <Link legacyBehavior href="/">
-          <a className="bold" data-active={isActive('/')}>
-            Home
-          </a>
-        </Link>
-        <Link legacyBehavior href="/categories">
-          <a className="bold" data-active={isActive('/categories')}>
-            Categories
-          </a>
-        </Link>
-      </div>
-    );
+  } else {
     right = (
       <div className="right">
         {session?.user?.image && (
@@ -85,7 +49,7 @@ const Header: React.FC = () => {
             style={{height: '1.5rem', width: '1.5rem', borderRadius: '1rem'}}
           />
         )}
-        <input type="submit" value="Log out" onClick={() => signOut({ callbackUrl: '/'})}/>
+        <input type="submit" value="Log out" onClick={handleClickLogout}/>
       </div>
     );
   }

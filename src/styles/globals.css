@@ -1,3 +1,10 @@
+:root {
+  --background-color: #102a43;
+  --second-color: #243b53;
+  --third-color: #334e68;
+  --shadow-color: 0 0 5px #00000073; 
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -7,8 +14,7 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
-  background-color: #102a43;
+  background-color: var(--background-color);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
@@ -34,8 +40,14 @@ input, button {
 
 nav {
   display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 1;
   flex-wrap: wrap;
-  padding: 1rem;
+  height: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: var(--background-color);
 }
 
 .category-header {
@@ -54,7 +66,7 @@ nav {
   position: absolute;
   flex-wrap: wrap;
   z-index: 9999;
-  background-color: #334e68;
+  background-color: var(--third-color);
   border-radius: 2px;
 }
 
@@ -87,8 +99,8 @@ nav {
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  background-color: #243b53;
-  box-shadow: 0 0 5px #00000073;
+  background-color: var(--second-color);
+  box-shadow: var(--shadow-color);
   flex-wrap: wrap;
   overflow: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
@@ -134,8 +146,8 @@ nav {
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  background-color: #243b53;
-  box-shadow: 0 0 5px #00000073;
+  background-color: var(--second-color);
+  box-shadow: var(--shadow-color);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   flex-wrap: wrap;
@@ -151,7 +163,7 @@ nav {
 
 .flashcard-sideB {
   transform: rotateY(180deg);
-  background-color: #334e68;
+  background-color: var(--third-color);
 }
 
 .layout {
