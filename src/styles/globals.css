@@ -166,6 +166,23 @@ nav {
   background-color: var(--third-color);
 }
 
+.landing-div {
+  margin: auto;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  width: clamp(300px, calc(90vw), 800px);
+  height: 50vh;
+}
+
+.landing-div p {
+  line-height: 150%;
+}
+
+.landing-div button {
+  align-self: flex-start;
+}
+
 .layout {
   padding-bottom: 4rem;
 }

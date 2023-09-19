@@ -1,0 +1,290 @@
+{
+  "users": [
+    {
+      "id": "asdfghjklasdfghjkl",
+      "name": "Nikki",
+      "email": "nikki@email.com",
+      "emailVerified": null,
+      "image": "https://avatars.githubusercontent.com/u/25747569?v=4",
+      "created_at": "2023-05-05T07:29:44.389",
+      "updated_at": "2023-05-05T07:29:16.328"
+    },
+    {
+      "id": "qwertyuiopqwertyuiop",
+      "name": "dominiquecuevas",
+      "email": "cuevasdominique@gmail.com",
+      "emailVerified": null,
+      "image": "https://avatars.githubusercontent.com/u/56096225?v=4",
+      "created_at": "2023-05-11T06:17:03.856",
+      "updated_at": "2023-05-11T06:17:03.856"
+    },
+    {
+      "id": "zxcvbnmzxcvbnm",
+      "name": "Trixie Mattel",
+      "email": "trixie@trixie.codes",
+      "emailVerified": null,
+      "image": "https://avatars.githubusercontent.com/u/48346627?v=4",
+      "created_at": "2023-09-09T03:07:20.649",
+      "updated_at": "2023-09-09T03:07:20.649"
+    },
+    {
+      "id": "lkjhgfdsalkjhgfdsa",
+      "name": "Darth Playguise",
+      "email": "darth.playguise@gmail.com",
+      "emailVerified": null,
+      "image": "https://lh3.googleusercontent.com/a/ACg8ocI8QHshSwVWHCauV3iYrAMA_OmwVoBJtnYXfNGw_qav=s96-c",
+      "created_at": "2023-09-11T07:05:04.637",
+      "updated_at": "2023-09-11T07:05:04.637"
+    },
+    {
+      "id": "poiuytrewqpoiuytrewq",
+      "name": "Daniel Craig",
+      "email": "d.craig@gmail.com",
+      "emailVerified": null,
+      "image": "https://lh3.googleusercontent.com/a/ACg8ocLfKnDrgIjxXC9QP8lViyLG6pYvjAtDEzppBfvPtc-W=s96-c",
+      "created_at": "2023-09-12T02:36:36.745",
+      "updated_at": "2023-09-12T02:36:36.745"
+    }
+  ],
+  "categories": [
+    {
+      "id": "qazxswedcvfr",
+      "name": "French",
+      "created_at": "2023-06-20T02:01:14.87",
+      "creatorId": "asdfghjklasdfghjkl"
+    },
+    {
+      "id": "tgbnhyujmki",
+      "name": "French",
+      "created_at": "2023-06-16T18:51:51.142",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "ujmnhytgbvfr",
+      "name": "stuff",
+      "created_at": "2023-07-04T20:57:42.281",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "edcvfrtgbnhy",
+      "name": "chinese",
+      "created_at": "2023-07-04T03:29:15.133",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "rfvcdewsxzaq",
+      "name": "Vocab",
+      "created_at": "2023-06-17T04:53:43.467",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "vfredcxswqaz",
+      "name": "Shows",
+      "created_at": "2023-09-12T02:36:41.113",
+      "creatorId": "poiuytrewqpoiuytrewq"
+    },
+    {
+      "id": "xswedcvfrtgb",
+      "name": "Spanish",
+      "created_at": "2023-09-12T02:37:34.642",
+      "creatorId": "poiuytrewqpoiuytrewq"
+    },
+    {
+      "id": "zaqwsxcderfv",
+      "name": "Stuff",
+      "created_at": "2023-09-12T06:13:37.348",
+      "creatorId": "lkjhgfdsalkjhgfdsa"
+    }
+  ],
+  "flashcards": [
+    {
+      "id": "zaq12wsxcde34rfvbgt5",
+      "sideA": "Lorem Ipsum",
+      "sideB": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "categoryId": "rfvcdewsxzaq",
+      "created_at": "2023-06-15T23:59:50.866",
+      "updated_at": "2023-06-19T00:33:24.019",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "1qazxsw23edcvfr45tgb",
+      "sideA": "💂‍♀️",
+      "sideB": "British",
+      "categoryId": "rfvcdewsxzaq",
+      "created_at": "2023-06-15T23:58:58.143",
+      "updated_at": "2023-06-19T01:23:34.127",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "xsw23edcvfr45tgbnhy6",
+      "sideA": "谢谢",
+      "sideB": "thanks",
+      "categoryId": "edcvfrtgbnhy",
+      "created_at": "2023-06-15T22:26:49.525",
+      "updated_at": "2023-07-04T03:29:53.832",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "3edcvfr45tgbnhy67ujm",
+      "sideA": "sauve",
+      "sideB": "safe",
+      "categoryId": "qazxswedcvfr",
+      "created_at": "2023-06-20T02:02:06.909",
+      "updated_at": "2023-06-20T02:01:26.549",
+      "creatorId": "asdfghjklasdfghjkl"
+    },
+    {
+      "id": "vfr45tgbnhy67ujmki89",
+      "sideA": "中国人",
+      "sideB": "a Chinese person",
+      "categoryId": "edcvfrtgbnhy",
+      "created_at": "2023-06-15T23:50:14.489",
+      "updated_at": "2023-07-04T03:29:53.832",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "bgt56yhnmju78iklo90p",
+      "sideA": "plupart",
+      "sideB": "mostly",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-07-03T19:57:52.546",
+      "updated_at": "2023-07-03T19:57:52.546",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "aq12wsxcde34rfvbgt56",
+      "sideA": "il y a quelques temps",
+      "sideB": "some time ago",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-07-04T03:24:02.455",
+      "updated_at": "2023-07-04T03:24:02.455",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "sxcde34rfvbgt56yhnmj",
+      "sideA": "espérant",
+      "sideB": "hoping",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-06-15T06:00:29.027",
+      "updated_at": "2023-06-16T18:59:24.05",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "e34rfvbgt56yhnmju78i",
+      "sideA": "baisser",
+      "sideB": "lower",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-06-15T05:59:52.44",
+      "updated_at": "2023-09-07T04:39:38.236",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "54rfvcde32wsxzaq1qaz",
+      "sideA": "ensuite",
+      "sideB": "next",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-09-07T07:31:47.956",
+      "updated_at": "2023-09-07T07:31:47.956",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "7ujmnhy65tgbvfr43edc",
+      "sideA": "clôture",
+      "sideB": "fence",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-09-07T07:33:47.19",
+      "updated_at": "2023-09-07T07:33:47.19",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "6yhnmju75tgbvfr4cde3",
+      "sideA": "fenêtre",
+      "sideB": "window",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-09-07T07:34:21.85",
+      "updated_at": "2023-09-07T07:34:21.85",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "p09olki89olp7ujmnhy6",
+      "sideA": "endroit",
+      "sideB": "place",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-09-07T07:35:17.424",
+      "updated_at": "2023-09-07T07:35:17.424",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "34refdvcbgxtsw5261yq",
+      "sideA": "rappeler",
+      "sideB": "recall",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-09-07T07:35:41.322",
+      "updated_at": "2023-09-07T07:35:41.322",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "jmnhyuki8765tgbvfr4c",
+      "sideA": "qu'importe",
+      "sideB": "whatever",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-09-07T07:36:08.27",
+      "updated_at": "2023-09-07T07:36:08.27",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "7ujmju78iki89olp0p7u",
+      "sideA": "envoyer",
+      "sideB": "to send",
+      "categoryId": "tgbnhyujmkio",
+      "created_at": "2023-09-07T07:30:05.32",
+      "updated_at": "2023-09-07T14:38:12.547",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "63yehdncbvgftr54mxjs",
+      "sideA": "front",
+      "sideB": "back",
+      "categoryId": "ujmnhytgbvfr",
+      "created_at": "2023-09-11T20:41:38.356",
+      "updated_at": "2023-09-11T20:41:38.356",
+      "creatorId": "qwertyuiopqwertyuiop"
+    },
+    {
+      "id": "owlskdmcnvjhdus7263s",
+      "sideA": "Avatar The Last Airbender",
+      "sideB": "The better Avatar show lol!",
+      "categoryId": "vfredcxswqaz",
+      "created_at": "2023-09-12T02:37:21.424",
+      "updated_at": "2023-09-12T02:37:21.424",
+      "creatorId": "poiuytrewqpoiuytrewq"
+    },
+    {
+      "id": "0192owieurjfkdlspqmz",
+      "sideA": "El bano",
+      "sideB": "Bathroom",
+      "categoryId": "xswedcvfrtgb",
+      "created_at": "2023-09-12T02:37:54.52",
+      "updated_at": "2023-09-12T02:37:54.52",
+      "creatorId": "poiuytrewqpoiuytrewq"
+    },
+    {
+      "id": "6y0pt52wbcgdmxjsuwza",
+      "sideA": "Front",
+      "sideB": "Back",
+      "categoryId": "zaqwsxcderfv",
+      "created_at": "2023-09-12T06:13:52.746",
+      "updated_at": "2023-09-12T06:13:52.746",
+      "creatorId": "lkjhgfdsalkjhgfdsa"
+    },
+    {
+      "id": "8ikm2wsxvbfgrt4573ue",
+      "sideA": "1",
+      "sideB": "2",
+      "categoryId": "zaqwsxcderfv",
+      "created_at": "2023-09-12T06:14:13.703",
+      "updated_at": "2023-09-12T06:14:13.703",
+      "creatorId": "lkjhgfdsalkjhgfdsa"
+    }
+  ]
+}

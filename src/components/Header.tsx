@@ -19,8 +19,13 @@ const Header: React.FC = () => {
 
   const left = (
     <div className="left">
+      <Link legacyBehavior href="/">
+        <a data-active={isActive('/')}>
+          Home
+        </a>
+      </Link>
       <Link legacyBehavior href="/categories">
-        <a className="bold" data-active={isActive('/categories')}>
+        <a data-active={isActive('/categories')}>
           Categories
         </a>
       </Link>
@@ -33,7 +38,7 @@ const Header: React.FC = () => {
     right = (
       <div className="right">
         <Link legacyBehavior href="/api/auth/signin">
-          <a data-active={isActive('/signup')}>Log in</a>
+          <a>Log in</a>
         </Link>
       </div>
     );

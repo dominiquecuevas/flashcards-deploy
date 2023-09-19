@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "cypress/e2e/flashcard-input-form.spec.cy.js", "cypress/support/commands.js", "cypress/e2e/login.spec.cy.js", "cypress/e2e/category.spec.cy.js"],
   "exclude": ["node_modules"]
 }

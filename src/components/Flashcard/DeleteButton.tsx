@@ -1,12 +1,10 @@
 import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/react'
 
-export const DeleteButton = ({ fetchData } : { fetchData: any}) => {
+export const DeleteButton = () => {
   const { selectedFlashcards, toggleCheckboxes } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
   const router = useRouter()
-  const { data: session } = useSession()
 
   const handleSelectClick = () => {
     dispatch({type: 'selectFlashcards/toggled'})
@@ -14,25 +12,25 @@ export const DeleteButton = ({ fetchData } : { fetchData: any}) => {
   }
 
   const handleDeleteClick = async () => {
-    if ( !session ) {
-      await router.push('/api/auth/signin')
+    if (confirm('Delete selected flashcards?')) {
+      let deleteFlashcards = [...selectedFlashcards]
+      dispatch({type: 'deleteFlashcards/removed', payload: deleteFlashcards})
+      dispatch({type: 'selectFlashcards/toggled'})
+      dispatch({type: 'selectFlashcards/cleared'})
+      await fetch(`/api/flashcards?ids=${deleteFlashcards}`, {
+        method: 'DELETE'
+      })
+      .then((res) => {
+        if (res.status === 401) {
+          router.push('/api/auth/signin')
+        } else if (!res.ok) {
+          throw res
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
-    await fetch(`/api/flashcards?ids=${selectedFlashcards}`, {
-      method: 'DELETE'
-    })
-    .then((res) => {
-      if (res.ok) {
-      } else {
-        alert('Something went wrong.')
-        throw res
-      }
-    })
-    .catch(error => {
-      console.log(error)
-    })
-    fetchData()
-    dispatch({type: 'selectFlashcards/toggled'})
-    dispatch({type: 'selectFlashcards/cleared'})
   }
   
   return (

@@ -1,10 +1,10 @@
 import { createContext, ReactNode, useContext, useReducer } from 'react'
 
 type CategoriesType = {
-  categories?: Array<any>
-  isFetching?: boolean
-  hasError?: boolean
-  category?: string
+  categories: Array<any>
+  isFetching: boolean
+  hasError: boolean
+  category: string
 }
 
 const CategoriesContext = createContext<CategoriesType>({} as CategoriesType)

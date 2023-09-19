@@ -31,15 +31,14 @@ const Category = (props: Props) => {
   const fetchData = useCallback(async () => {
     dispatch({type: 'editCategory/setName', payload: categoryQuery})
     dispatch({type: 'fetchFlashcards/request'})
-    await fetch(`/api/flashcards/?category=${categoryQuery}`)
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        } else {
-          alert('Something went wrong.')
-          throw res
-        }
-      })
+    await fetch(`/api/flashcards?category=${categoryQuery}`)
+    .then(res => {
+      if (res.ok) {
+        return res.json()
+      } else {
+        throw res
+      }
+    })
     .then(data => {
       dispatch({type: 'editCategory/setCategoryId', payload: data.category?.id || ''})
       dispatch({type: 'fetchFlashcards/success', payload: data.flashcards})
@@ -58,15 +57,15 @@ const Category = (props: Props) => {
     <Layout>
       <div>
         <div className="category-header">
-          <h2>{!toggleCategoryRename && categoryQuery}</h2>
+          <h2>{!toggleCategoryRename && category}</h2>
           {toggleCategoryRename && (<CategoryEditForm categoryQuery={categoryQuery} />)}
           <CategoryMoreButton categoryQuery={categoryQuery} />
         </div>
         <div style={{display: 'flex', flexWrap: 'wrap', padding: '6px', maxWidth: '860px', margin: 'auto'}}>
-          <Formv2 category={category || ''} fetchData={fetchData} />
+          <Formv2 category={category || ''} />
           <EditButton />
           <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'end'}}>
-            <DeleteButton fetchData={fetchData} />
+            <DeleteButton />
           </div>
         </div>
         {isFetching ? <div style={{textAlign: "center"}}>Loading...</div> : <FlashcardModulev2 />}

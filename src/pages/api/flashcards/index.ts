@@ -5,20 +5,20 @@ import { NextApiRequest, NextApiResponse } from "next/types"
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const session: SessionWithCallbacks | null = await getServerSession(req, res, authOptions);
-  if ( !session && req.method !== 'GET') {
-    return res.status(401).json([])
+  if ( !session ) {
+    return res.status(401).json(null)
   }
   if ( req.method === 'GET' ) {
     const { category } = req.query
     const categoryData = await prisma.category.findFirst({
       where: {
-        creatorId: session?.userId || process.env.USER_ID,
+        creatorId: session?.userId,
         name: category as string
       }
     })
     const feed = await prisma.flashcard.findMany({
       where: {
-        creatorId: session?.userId || process.env.USER_ID,
+        creatorId: session?.userId,
         category: {
           name: category as string
         }
@@ -59,14 +59,14 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     })
     res.json(result)
   } else if ( req.method === 'DELETE' ) {
-  const { ids } = req.query
-  const idsArray = (ids as string).split(',')
-  const flashcards = await prisma.flashcard.deleteMany({
-    where: {
-      id: {in: idsArray},
-      AND: {creator: session?.user}
-    },
-  })
-  res.json(flashcards)
+    const { ids } = req.query
+    const idsArray = (ids as string).split(',')
+    const flashcards = await prisma.flashcard.deleteMany({
+      where: {
+        id: {in: idsArray},
+        AND: {creator: session?.user}
+      },
+    })
+    res.json(flashcards)
   }
 }

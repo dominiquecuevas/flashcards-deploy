@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse,  } from "next/types"
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const session: SessionWithCallbacks | null = await getServerSession(req, res, authOptions)
-  if ( !session?.userId ) {
+  if ( !session ) {
     return res.status(401).json([])
   }
   if (req.method == 'GET') {
@@ -34,19 +34,30 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       })
       res.json(result)
     } else {
-      res.json(categoryExists)
+      res.status(409).json(null)
     }
   } else if (req.method == 'PUT') {
     const { category, categoryId } = req.body
-    const result = await prisma.category.update({
+    const categoryExists = await prisma.category.findFirst({
       where: {
-        id: categoryId
-      },
-      data: {
-        name: category
-      },
+        creatorId: session.userId,
+        name: category,
+        id: { not: categoryId }
+      }
     })
-    res.json(result)
+    if ( categoryExists === null ) {
+      const result = await prisma.category.update({
+        where: {
+          id: categoryId
+        },
+        data: {
+          name: category
+        },
+      })
+      res.json(result)
+    } else {
+      res.status(409).json(null)
+    }
   } else if (req.method == 'DELETE') {
     const { categoryId } = req.query
     const result = await prisma.category.delete({

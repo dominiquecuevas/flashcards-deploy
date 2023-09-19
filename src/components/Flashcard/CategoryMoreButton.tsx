@@ -36,20 +36,26 @@ export const CategoryMoreButton = (props: { categoryQuery: string }) => {
       await router.push('/api/auth/signin')
     }
     dispatch({type: 'editCategory/toggled'})
-    if (confirm(`Delete "${categoryQuery}" category and all related flashcards?`)) {
-      await fetch(`/api/category?categoryId=${categoryId}`, {
+    if (confirm(`Delete "${categoryQuery}" category and all its flashcards?`)) {
+      router.push('/categories')
+      fetch(`/api/category?categoryId=${categoryId}`, {
         method: 'DELETE'
       })
       .then((res) => {
         if (res.ok) {
-          router.push('/')
+          router.push('/categories')
+        } else if (res.status === 401) {
+          router.push('/api/auth/signin')
         } else {
-          alert('Something went wrong.')
           throw res
         }
       })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
+
   return (
     <div className="category-more">
       <input 

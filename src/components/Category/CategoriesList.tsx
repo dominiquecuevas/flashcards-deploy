@@ -20,6 +20,7 @@ export const CategoriesList = () => {
         dispatch({type: 'fetchCategories/success', payload: data})
       })
       .catch(error => {
+        console.log(error)
         dispatch({type: 'fetchCategories/failure'})
       })
   }, [dispatch])

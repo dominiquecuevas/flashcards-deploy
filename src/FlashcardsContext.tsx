@@ -1,19 +1,19 @@
 import { createContext, useContext, useReducer} from 'react'
 
 type FlashcardsType = {
-  category?: string
-  categoryId?: string
-  toggleCategoryEdit?: boolean
-  toggleCategoryRename?: boolean
-  flashcards?: Array<any>
-  isFetching?: boolean
-  hasError?: boolean
-  selectedFlashcards?: Array<any>
-  toggleCheckboxes?: boolean
-  sideA?: string
-  sideB?: string
-  toggleRadios?: boolean
-  selectedRadioId?: string
+  category: string
+  categoryId: string
+  toggleCategoryEdit: boolean
+  toggleCategoryRename: boolean
+  flashcards: Array<any>
+  isFetching: boolean
+  hasError: boolean
+  selectedFlashcards: Array<string>
+  toggleCheckboxes: boolean
+  sideA: string
+  sideB: string
+  toggleRadios: boolean
+  selectedRadioId: string
 }
 
 const FlashcardsContext = createContext<FlashcardsType>({} as FlashcardsType)
@@ -105,10 +105,44 @@ function flashcardsReducer(state: FlashcardsType, action: any) {
         hasError: true
       }
     }
+    case 'postFlashcard/added': {
+      return {
+        ...state,
+        flashcards: [action.payload, ...state.flashcards]
+      }
+    }
+    case 'putFlashcard/edit': {
+      return {
+        ...state,
+        flashcards: state.flashcards.map((flashcard) => {
+          if (flashcard.id === action.payload.selectedRadioId) {
+            return {
+              ...flashcard, 
+              sideA: action.payload.sideA,
+              sideB: action.payload.sideB
+            }
+          }
+          else return {...flashcard}
+        })
+      }
+    }
+    case 'deleteFlashcards/removed': {
+      return {
+        ...state,
+        flashcards: state.flashcards?.filter(flashcards => {
+          for (let i = 0; i < action.payload.length; i++) {
+            if (action.payload[i] === flashcards.id) {
+              return false
+            }
+          }
+          return true
+        })
+      }
+    }
     case 'selectFlashcards/added': {
       return {
         ...state,
-        selectedFlashcards: [...state.selectedFlashcards || [], action.payload]
+        selectedFlashcards: [...state.selectedFlashcards, action.payload]
       }
     }
     case 'selectFlashcards/removed': {

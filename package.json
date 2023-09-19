@@ -24,6 +24,9 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^9.0.0",
+    "cypress": "^13.1.0",
+    "cypress-social-logins": "^1.14.1",
     "prisma": "^4.13.0"
   }
 }

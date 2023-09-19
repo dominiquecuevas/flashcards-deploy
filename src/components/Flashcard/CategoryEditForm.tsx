@@ -26,8 +26,12 @@ export const CategoryEditForm = (props : { categoryQuery: string }) => {
       .then((res) => {
         if (res.ok) {
           router.push(`/flashcards/${encodeURIComponent(category)}`)
+        } else if (res.status === 401) {
+          router.push('/api/auth/signin')
+        } else if (res.status === 409) {
+          alert(`Category name "${category}" already exists`)
+          dispatch({type: 'editCategory/setName', payload: categoryQuery})
         } else {
-          alert('Something went wrong.')
           throw res
         }
       })
