@@ -36,4 +36,4 @@ next-env.d.ts
 
 notes.md
 .env
-/data/
+database-seed.json
