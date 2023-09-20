@@ -9,7 +9,6 @@ export const CategoryMoreButton = (props: { categoryQuery: string }) => {
   const { categoryId, toggleCategoryEdit, toggleCategoryRename } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
   const router = useRouter()
-  const { data: session } = useSession()
 
   const handleClick = () => {
     if ( !toggleCategoryRename ) {
@@ -23,18 +22,12 @@ export const CategoryMoreButton = (props: { categoryQuery: string }) => {
 
   const handleClickRename = async (event: SyntheticEvent) => {
     event.preventDefault()
-    if ( !session ) {
-      await router.push('/api/auth/signin')
-    }
     dispatch({type: 'editCategory/renameToggled'})
     dispatch({type: 'editCategory/toggled'})
   }
 
   const handleClickDelete = async (event: SyntheticEvent) => {
     event.preventDefault()
-    if ( !session ) {
-      await router.push('/api/auth/signin')
-    }
     dispatch({type: 'editCategory/toggled'})
     if (confirm(`Delete "${categoryQuery}" category and all its flashcards?`)) {
       router.push('/categories')
@@ -44,14 +37,15 @@ export const CategoryMoreButton = (props: { categoryQuery: string }) => {
       .then((res) => {
         if (res.ok) {
           router.push('/categories')
-        } else if (res.status === 401) {
-          router.push('/api/auth/signin')
         } else {
           throw res
         }
       })
       .catch(error => {
         console.log(error)
+        if (error.status === 401) {
+          router.push('/api/auth/signin')
+        }
       })
     }
   }
@@ -59,6 +53,7 @@ export const CategoryMoreButton = (props: { categoryQuery: string }) => {
   return (
     <div className="category-more">
       <input 
+        name="category more button"
         type="button" 
         value="∙∙∙"
         onClick={handleClick}

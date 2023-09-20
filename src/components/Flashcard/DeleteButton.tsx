@@ -21,14 +21,15 @@ export const DeleteButton = () => {
         method: 'DELETE'
       })
       .then((res) => {
-        if (res.status === 401) {
-          router.push('/api/auth/signin')
-        } else if (!res.ok) {
+        if (!res.ok) {
           throw res
         }
       })
       .catch(error => {
         console.log(error)
+        if (error.status === 401) {
+          router.push('/api/auth/signin')
+        }
       })
     }
   }

@@ -22,16 +22,17 @@ export const CategoryForm = () => {
     .then(res => {
       if (res.ok) {
         router.push(`/flashcards/${encodeURIComponent(category || '')}`)
-      } else if (res.status === 401) {
-        router.push('/api/auth/signin')
-      } else if (res.status === 409) {
-        alert(`Category name "${category}" already exists`)
       } else {
         throw res
       }
     })
     .catch(error => {
       console.log(error)
+      if (error.status === 401) {
+        router.push('/api/auth/signin')
+      } else if (error.status === 409) {
+        alert(`Category name "${category}" already exists`)
+      }
     })
   }
   return (

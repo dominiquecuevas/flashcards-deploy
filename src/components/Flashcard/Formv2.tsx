@@ -21,16 +21,17 @@ export const Formv2 = ({ category } : { category: string }) => {
         body: JSON.stringify(body)
       })
       .then(async res => {
-        if (res.status === 401) {
-          await router.push('/api/auth/signin')
-        } else if (!res.ok) {
+        if (!res.ok) {
           throw res
         }
       })
       .catch(error => {
         console.log(error)
+        if (error.status === 401) {
+          router.push('/api/auth/signin')
+        }
       })
-    } else if ( sideA && sideB ) {
+    } else {
       const body = { sideA, sideB, category: category, categoryId }
       dispatch({type: 'createFlashcard/cleared'})
       await fetch('/api/flashcards', {
@@ -41,9 +42,7 @@ export const Formv2 = ({ category } : { category: string }) => {
       .then(res => {
         if (res.ok) {
           return res.json()
-        } else if (res.status === 401) {
-          router.push('/api/auth/signin')
-        } else if (!res.ok) {
+        } else {
           throw res
         }
       })
@@ -52,6 +51,9 @@ export const Formv2 = ({ category } : { category: string }) => {
       })
       .catch(error => {
         console.log(error)
+        if (error.status === 401) {
+          router.push('/api/auth/signin')
+        }
       })
     }
     inputElement.current?.focus()

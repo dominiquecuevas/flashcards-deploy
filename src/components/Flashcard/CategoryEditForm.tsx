@@ -12,9 +12,6 @@ export const CategoryEditForm = (props : { categoryQuery: string }) => {
 
   const submitData = async (e: SyntheticEvent) => {
     e.preventDefault()
-    if ( !session ) {
-      await router.push('/api/auth/signin')
-    }
     dispatch({type: 'editCategory/renameToggled'})
     if ( category?.length ) {
       const body = { categoryId, category }
@@ -26,17 +23,18 @@ export const CategoryEditForm = (props : { categoryQuery: string }) => {
       .then((res) => {
         if (res.ok) {
           router.push(`/flashcards/${encodeURIComponent(category)}`)
-        } else if (res.status === 401) {
-          router.push('/api/auth/signin')
-        } else if (res.status === 409) {
-          alert(`Category name "${category}" already exists`)
-          dispatch({type: 'editCategory/setName', payload: categoryQuery})
         } else {
           throw res
         }
       })
       .catch(error => {
         console.log(error)
+        if (error.status === 401) {
+          router.push('/api/auth/signin')
+        } else if (error.status === 409) {
+          alert(`Category name "${category}" already exists`)
+          dispatch({type: 'editCategory/setName', payload: categoryQuery})
+        }
       })
     }
   }
@@ -52,6 +50,7 @@ export const CategoryEditForm = (props : { categoryQuery: string }) => {
       style={{display: 'inline-block'}}
     >
       <input
+        name="category"
         type="text"
         value={category}
         onChange={(e) => dispatch({type: 'editCategory/setName', payload: e.target.value})}
