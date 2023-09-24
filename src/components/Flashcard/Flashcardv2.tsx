@@ -2,23 +2,20 @@ import { useState, SyntheticEvent } from 'react'
 import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 
 export type FlashcardProps = {
-  flashcard: {
-    category?: string
-    createdAt?: Date
-    creatorId?: string
-    id: string
-    sideA: string
-    sideB: string
-    updatedAt: Date
-  }
+  category?: string
+  createdAt?: Date
+  creatorId?: string
+  id: string
+  sideA: string
+  sideB: string
+  updatedAt: Date
 }
 
 export const Flashcardv2 = (props: FlashcardProps) => {
   const [showSide, setShowSide] = useState(false)
   const { toggleCheckboxes, toggleRadios, selectedRadioId } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
-  const {sideA, sideB, id} = props.flashcard
-
+  const { sideA, sideB, id } = props
   const style = { 
     transform: showSide ? 'rotateY(180deg)' : '',
   }

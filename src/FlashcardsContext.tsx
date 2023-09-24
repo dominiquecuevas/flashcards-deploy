@@ -1,11 +1,12 @@
 import { createContext, useContext, useReducer} from 'react'
+import { FlashcardProps } from './components/Flashcard/Flashcardv2'
 
 type FlashcardsType = {
   category: string
   categoryId: string
   toggleCategoryEdit: boolean
   toggleCategoryRename: boolean
-  flashcards: Array<any>
+  flashcards: Array<FlashcardProps>
   isFetching: boolean
   hasError: boolean
   selectedFlashcards: Array<string>
@@ -14,6 +15,7 @@ type FlashcardsType = {
   sideB: string
   toggleRadios: boolean
   selectedRadioId: string
+  sorting: string
 }
 
 const FlashcardsContext = createContext<FlashcardsType>({} as FlashcardsType)
@@ -32,7 +34,8 @@ const initialFlashcards = {
   sideA: '',
   sideB: '',
   toggleRadios: false,
-  selectedRadioId: ''
+  selectedRadioId: '',
+  sorting: 'time'
 }
 
 export function FlashcardsProvider ({ children } : { children: React.ReactNode }) {
@@ -205,6 +208,12 @@ function flashcardsReducer(state: FlashcardsType, action: any) {
         ...state,
         sideA: '',
         sideB: ''
+      }
+    }
+    case 'sortFlashcards/set': {
+      return {
+        ...state,
+        sorting: action.payload
       }
     }
     default:

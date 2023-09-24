@@ -1,6 +1,7 @@
 import React, { useRef } from "react"
 import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 import { useRouter } from 'next/router'
+import { EditButton } from "./EditButton"
 
 export const Formv2 = ({ category } : { category: string }) => {
   const { sideA, sideB, selectedRadioId, categoryId } = useFlashcards()
@@ -89,6 +90,7 @@ export const Formv2 = ({ category } : { category: string }) => {
         type="submit" 
         value={selectedRadioId?.length ? "Update" : "Create"} 
       />
+      <EditButton />
     </form>
   )
 }

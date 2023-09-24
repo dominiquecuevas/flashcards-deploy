@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { useFlashcards, useFlashcardsDispatch } from "../../FlashcardsContext"
 import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/react'
 import { SyntheticEvent } from "react"
 
 export const CategoryMoreButton = (props: { categoryQuery: string }) => {

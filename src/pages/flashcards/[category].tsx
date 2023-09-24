@@ -9,6 +9,7 @@ import { FlashcardsProvider } from "@/FlashcardsContext"
 import { useFlashcards, useFlashcardsDispatch } from "../../FlashcardsContext"
 import { CategoryEditForm } from "@/components/Flashcard/CategoryEditForm"
 import { CategoryMoreButton } from "@/components/Flashcard/CategoryMoreButton"
+import { SortDropdown } from "@/components/Flashcard/SortDropdown"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context
@@ -61,11 +62,11 @@ const Category = (props: Props) => {
           {toggleCategoryRename && (<CategoryEditForm categoryQuery={categoryQuery} />)}
           <CategoryMoreButton categoryQuery={categoryQuery} />
         </div>
-        <div style={{display: 'flex', flexWrap: 'wrap', padding: '6px', maxWidth: '860px', margin: 'auto'}}>
+        <div style={{maxWidth: '860px', margin: 'auto'}}>
           <Formv2 category={category || ''} />
-          <EditButton />
-          <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'end'}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <DeleteButton />
+            <SortDropdown />
           </div>
         </div>
         {isFetching ? <div style={{textAlign: "center"}}>Loading...</div> : <FlashcardModulev2 />}

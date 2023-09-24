@@ -35,7 +35,7 @@ export const DeleteButton = () => {
   }
   
   return (
-    <>
+    <div>
       <input 
         type="button" 
         onClick={handleSelectClick} 
@@ -47,6 +47,6 @@ export const DeleteButton = () => {
         onClick={handleDeleteClick}
         disabled={!selectedFlashcards?.length}
       />
-    </>
+    </div>
   )
 }
