@@ -64,7 +64,7 @@ const Category = (props: Props) => {
         </div>
         <div style={{maxWidth: '860px', margin: 'auto'}}>
           <Formv2 category={category || ''} />
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'}}>
             <DeleteButton />
             <SortDropdown />
           </div>

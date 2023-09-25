@@ -20,6 +20,8 @@ export const FlashcardModulev2 = () => {
       } else {
         return 0;
       }
+    } else if ( sorting === 'random' ) {
+      return Math.floor(Math.random() * 3) - 1
     } else {
       return 0;
     }

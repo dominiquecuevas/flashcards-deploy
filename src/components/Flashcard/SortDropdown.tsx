@@ -5,13 +5,15 @@ export const SortDropdown = () => {
   const { sorting } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
 
-  const handleChange = (e: SyntheticEvent & {target: HTMLSelectElement}) => {
-    dispatch({type: 'sortFlashcards/set', payload: e.target.value})
+  const handleChange = (e: SyntheticEvent) => {
+    dispatch({type: 'sortFlashcards/set', payload: (e.target as HTMLInputElement).value})
   }
   return (
     <select name="sorting" value={sorting} onChange={handleChange}>
-      <option defaultChecked value="time">Time</option>
+      <option value="time">-----Sort-----</option>
       <option value="alphabetically">Alphabetically</option>
+      <option value="time">Time</option>
+      <option value="random">Random</option>
     </select>
   )
 }

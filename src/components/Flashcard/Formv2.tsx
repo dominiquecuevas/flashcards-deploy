@@ -4,9 +4,8 @@ import { useRouter } from 'next/router'
 import { EditButton } from "./EditButton"
 
 export const Formv2 = ({ category } : { category: string }) => {
-  const { sideA, sideB, selectedRadioId, categoryId } = useFlashcards()
+  const { sideA, sideB, selectedRadioId, categoryId, toggleRadios } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
-  const inputElement = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
   const submitData = async (e: React.SyntheticEvent) => {
@@ -57,40 +56,55 @@ export const Formv2 = ({ category } : { category: string }) => {
         }
       })
     }
-    inputElement.current?.focus()
   }
-  
+
+  const handleEditClick = () => {
+    dispatch({type: 'editFlashcard/toggled'})
+    dispatch({type: 'editFlashcard/cleared'})
+    dispatch({type: 'createFlashcard/cleared'})
+  }
+
   return (
     <form 
       onSubmit={submitData}
-      style={{ display: "flex", flexGrow: 2, flexWrap: 'wrap' }}
       name="flashcard"
       data-test="flashcard-form"
+      style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end" }}
     >
-      <input
-        autoFocus
-        name="Front text"
-        placeholder="Front text"
-        type="text"
-        value={sideA}
-        onChange={(e) => dispatch({type: 'createFlashcard/setSideA', payload: e.target.value})}
-        ref={inputElement}
-        style={{ flexGrow: 1 }}
-      />
-      <input
-        name="Back text"
-        placeholder="Back text"
-        type="text"
-        value={sideB}
-        onChange={(e) => dispatch({type: 'createFlashcard/setSideB', payload: e.target.value})}
-        style={{ flexGrow: 1 }}
-      />
-      <input 
-        disabled={!sideA || !sideB} 
-        type="submit" 
-        value={selectedRadioId?.length ? "Update" : "Create"} 
-      />
-      <EditButton />
+      <div
+        style={{ display: "flex", flexGrow: 1, flexWrap: "wrap" }}
+      >
+        <input
+          name="Front text"
+          placeholder="Front text"
+          type="text"
+          value={sideA}
+          onChange={(e) => dispatch({type: 'createFlashcard/setSideA', payload: e.target.value})}
+          style={{ flexGrow: 1, minWidth: 240}}
+        />
+        <input
+          name="Back text"
+          placeholder="Back text"
+          type="text"
+          value={sideB}
+          onChange={(e) => dispatch({type: 'createFlashcard/setSideB', payload: e.target.value})}
+          style={{ flexGrow: 1, minWidth: 240 }}
+        />
+      </div>
+      <div
+        style={{ justifySelf: "flex-end" }}
+      >
+        <input 
+          disabled={!sideA || !sideB} 
+          type="submit" 
+          value={selectedRadioId?.length ? "Update" : "Create"} 
+        />
+        <input 
+          type="button" 
+          onClick={handleEditClick} 
+          value={!toggleRadios ? 'Edit' : 'Cancel'} 
+        />
+      </div>
     </form>
   )
 }
