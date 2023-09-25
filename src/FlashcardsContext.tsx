@@ -35,7 +35,7 @@ const initialFlashcards = {
   sideB: '',
   toggleRadios: false,
   selectedRadioId: '',
-  sorting: 'time'
+  sorting: ''
 }
 
 export function FlashcardsProvider ({ children } : { children: React.ReactNode }) {

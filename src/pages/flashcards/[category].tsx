@@ -65,8 +65,8 @@ const Category = (props: Props) => {
         <div style={{maxWidth: '860px', margin: 'auto'}}>
           <Formv2 category={category || ''} />
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'}}>
-            <DeleteButton />
             <SortDropdown />
+            <DeleteButton />
           </div>
         </div>
         {isFetching ? <div style={{textAlign: "center"}}>Loading...</div> : <FlashcardModulev2 />}

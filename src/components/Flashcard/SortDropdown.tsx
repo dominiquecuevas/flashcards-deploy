@@ -10,7 +10,7 @@ export const SortDropdown = () => {
   }
   return (
     <select name="sorting" value={sorting} onChange={handleChange}>
-      <option value="time">-----Sort-----</option>
+      <option value="default">-----Sort-----</option>
       <option value="alphabetically">Alphabetically</option>
       <option value="time">Time</option>
       <option value="random">Random</option>

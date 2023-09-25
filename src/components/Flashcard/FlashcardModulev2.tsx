@@ -12,7 +12,7 @@ export const FlashcardModulev2 = () => {
       } else {
         return 0;
       }
-    } else if ( sorting === 'time' ) {
+    } else if ( sorting === 'time' || sorting === 'default') {
       if (a.updatedAt < b.updatedAt) {
         return 1;
       } else if (a.updatedAt > b.updatedAt) {
