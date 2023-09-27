@@ -38,7 +38,7 @@ export const CategoryForm = () => {
   return (
     <form 
       onSubmit={submitData}
-      style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: '6px'}}
+      style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}
     >
       <input 
         type="text" 

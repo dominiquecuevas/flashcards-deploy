@@ -5,9 +5,9 @@ export const FlashcardModulev2 = () => {
   const { flashcards, sorting } = useFlashcards()
   flashcards?.sort((a, b) => {
     if ( sorting === 'alphabetically' ) {
-      if (a.sideA < b.sideA) {
+      if (a.sideA.toLocaleLowerCase() < b.sideA.toLocaleLowerCase()) {
         return -1;
-      } else if (a.sideA > b.sideA) {
+      } else if (a.sideA.toLocaleLowerCase() > b.sideA.toLocaleLowerCase()) {
         return 1;
       } else {
         return 0;
@@ -20,8 +20,6 @@ export const FlashcardModulev2 = () => {
       } else {
         return 0;
       }
-    } else if ( sorting === 'random' ) {
-      return Math.floor(Math.random() * 3) - 1
     } else {
       return 0;
     }

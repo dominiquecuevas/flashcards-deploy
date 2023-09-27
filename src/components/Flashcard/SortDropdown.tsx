@@ -13,7 +13,6 @@ export const SortDropdown = () => {
       <option value="default">-----Sort-----</option>
       <option value="alphabetically">Alphabetically</option>
       <option value="time">Time</option>
-      <option value="random">Random</option>
     </select>
   )
 }

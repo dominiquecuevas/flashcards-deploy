@@ -69,7 +69,7 @@ export const Formv2 = ({ category } : { category: string }) => {
       onSubmit={submitData}
       name="flashcard"
       data-test="flashcard-form"
-      style={{ display: "flex", flexWrap: "wrap" }}
+      style={{ display: "flex", flexWrap: "wrap", padding: "var(--margin-preset)" }}
     >
       <div
         style={{ display: "flex", flexGrow: 1, flexWrap: "wrap" }}

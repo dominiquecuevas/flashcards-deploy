@@ -2,7 +2,9 @@
   --background-color: #102a43;
   --second-color: #243b53;
   --third-color: #334e68;
-  --shadow-color: 0 0 5px #00000073; 
+  --shadow-color: 0 0 5px #00000073;
+  --margin-preset: 0.25rem;
+  --gap-preset: calc(2 * var(--margin-preset));
 }
 
 * {
@@ -34,8 +36,14 @@ h2 {
   padding: 6px;
 }
 
-input, button {
-  margin: 1px;
+input, button, select {
+  margin: var(--margin-preset);
+  height: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 1rem;
+  border: solid;
+  border-width: thin;
 }
 
 nav {
@@ -71,7 +79,7 @@ nav {
 }
 
 .category-dropdown a {
-  margin: 1rem;
+  margin: var(--gap-preset);
 }
 
 .deck-container {
@@ -117,14 +125,14 @@ nav {
   width: 100%;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
+  gap: var(--gap-preset);
+  padding: var(--gap-preset);
 }
 
 .flashcard {
   position: relative;
   background-color: transparent;
-  width: clamp(100px, calc(50vw - (3rem / 2)), 200px);
+  width: clamp(100px, calc(50vw - calc(var(--gap-preset) * 3 / 2)), 200px);
   height: 150px;
   perspective: 1000px;
 }
@@ -172,7 +180,7 @@ nav {
   display: flex;
   flex-direction: column;
   width: clamp(300px, calc(90vw), 800px);
-  height: 50vh;
+  height: 40vh;
 }
 
 .landing-div p {

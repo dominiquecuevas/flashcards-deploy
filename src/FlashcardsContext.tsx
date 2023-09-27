@@ -35,7 +35,7 @@ const initialFlashcards = {
   sideB: '',
   toggleRadios: false,
   selectedRadioId: '',
-  sorting: ''
+  sorting: 'default'
 }
 
 export function FlashcardsProvider ({ children } : { children: React.ReactNode }) {
