@@ -3,7 +3,6 @@ import { GetServerSideProps } from "next"
 import Layout from "../../components/Layout"
 import { FlashcardModulev2 } from '../../components/Flashcard/FlashcardModulev2'
 import { Formv2 } from "@/components/Flashcard/Formv2"
-import { EditButton } from "@/components/Flashcard/EditButton"
 import { DeleteButton } from "@/components/Flashcard/DeleteButton"
 import { FlashcardsProvider } from "@/FlashcardsContext"
 import { useFlashcards, useFlashcardsDispatch } from "../../FlashcardsContext"
@@ -27,8 +26,9 @@ type Props = {
 
 const Category = (props: Props) => {
   const { categoryQuery } = props
-  const { isFetching, category, toggleCategoryRename } = useFlashcards()
+  const { isFetching, category, toggleCategoryRename, toggleFormModal } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
+
   const fetchData = useCallback(async () => {
     dispatch({type: 'editCategory/setName', payload: categoryQuery})
     dispatch({type: 'fetchFlashcards/request'})
@@ -63,7 +63,6 @@ const Category = (props: Props) => {
           <CategoryMoreButton categoryQuery={categoryQuery} />
         </div>
         <div style={{maxWidth: '860px', margin: 'auto'}}>
-          <Formv2 category={category || ''} />
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: 'var(--margin-preset)'}}>
             <SortDropdown />
             <DeleteButton />
@@ -71,6 +70,7 @@ const Category = (props: Props) => {
         </div>
         {isFetching ? <div style={{textAlign: "center"}}>Loading...</div> : <FlashcardModulev2 />}
       </div>
+      {toggleFormModal && <Formv2 category={category || ''} />}
     </Layout>
   )
 }

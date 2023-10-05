@@ -4,8 +4,9 @@ import { FlashcardProps } from './components/Flashcard/Flashcardv2'
 type FlashcardsType = {
   category: string
   categoryId: string
-  toggleCategoryEdit: boolean
+  toggleMoreMenu: boolean
   toggleCategoryRename: boolean
+  toggleFormModal: boolean
   flashcards: Array<FlashcardProps>
   isFetching: boolean
   hasError: boolean
@@ -24,8 +25,9 @@ const FlashcardsDispatchContext = createContext<any>(null)
 const initialFlashcards = {
   category: '',
   categoryId: '',
-  toggleCategoryEdit: false,
+  toggleMoreMenu: false,
   toggleCategoryRename: false,
+  toggleFormModal: false,
   flashcards: [],
   isFetching: false,
   hasError: false,
@@ -63,10 +65,10 @@ export function useFlashcardsDispatch() {
 
 function flashcardsReducer(state: FlashcardsType, action: any) {
   switch (action.type) {
-    case 'editCategory/toggled' : {
+    case 'moreMenu/toggled' : {
       return {
         ...state,
-        toggleCategoryEdit: !state.toggleCategoryEdit
+        toggleMoreMenu: !state.toggleMoreMenu
       }
     }
     case 'editCategory/renameToggled': {
@@ -106,6 +108,12 @@ function flashcardsReducer(state: FlashcardsType, action: any) {
         ...state,
         isFetching: false,
         hasError: true
+      }
+    }
+    case 'flashcardsFormToggle/toggled': {
+      return {
+        ...state,
+        toggleFormModal: action.payload
       }
     }
     case 'postFlashcard/added': {
@@ -174,7 +182,7 @@ function flashcardsReducer(state: FlashcardsType, action: any) {
     case 'editFlashcard/toggled': {
       return {
         ...state,
-        toggleRadios: !state.toggleRadios,
+        toggleRadios: action.payload,
         toggleCheckboxes: false,
         selectedFlashcards: []
       }

@@ -1,12 +1,23 @@
-import React, { useRef } from "react"
+import React, { SyntheticEvent, useRef } from "react"
 import { useFlashcards, useFlashcardsDispatch } from '../../FlashcardsContext'
 import { useRouter } from 'next/router'
-import { EditButton } from "./EditButton"
+import { useWindowListener } from "../../../utilities"
+import Link from "next/link"
 
 export const Formv2 = ({ category } : { category: string }) => {
-  const { sideA, sideB, selectedRadioId, categoryId, toggleRadios } = useFlashcards()
+  const { sideA, sideB, selectedRadioId, categoryId, toggleFormModal } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
+  const ref = useRef<any>(null)
   const router = useRouter()
+
+  useWindowListener('click', (event) => {
+    if ( toggleFormModal && !ref.current.contains(event.target) ) {
+      dispatch({type: 'flashcardsFormToggle/toggled', payload: false})
+      dispatch({type: 'editFlashcard/toggled', payload: false})
+      dispatch({type: 'editFlashcard/cleared'})
+      dispatch({type: 'createFlashcard/cleared'})
+    }
+  })
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -14,7 +25,9 @@ export const Formv2 = ({ category } : { category: string }) => {
       const body = { selectedRadioId, sideA, sideB }
       dispatch({type: 'putFlashcard/edit', payload: body})
       dispatch({type: 'createFlashcard/cleared'})
-      dispatch({type: 'editFlashcard/toggled'})
+      dispatch({type: 'editFlashcard/toggled', payload: false})
+      dispatch({type: 'editFlashcard/cleared'})
+      dispatch({type: 'flashcardsFormToggle/toggled', payload: false})
       await fetch('/api/flashcards', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -58,53 +71,46 @@ export const Formv2 = ({ category } : { category: string }) => {
     }
   }
 
-  const handleEditClick = () => {
-    dispatch({type: 'editFlashcard/toggled'})
+  const handleClickClose = (event: SyntheticEvent) => {
+    event.preventDefault()
+    dispatch({type: 'flashcardsFormToggle/toggled'})
+    dispatch({type: 'editFlashcard/toggled', payload: false})
     dispatch({type: 'editFlashcard/cleared'})
     dispatch({type: 'createFlashcard/cleared'})
   }
 
   return (
-    <form 
-      onSubmit={submitData}
-      name="flashcard"
-      data-test="flashcard-form"
-      style={{ display: "flex", flexWrap: "wrap", padding: "var(--margin-preset)" }}
-    >
+    <div className="flashcard-form-modal-backdrop backdrop">
       <div
-        style={{ display: "flex", flexGrow: 1, flexWrap: "wrap" }}
+        className="flashcard-form-modal"
+        ref={ref}
       >
-        <input
-          name="Front text"
-          placeholder="Front text"
-          type="text"
-          value={sideA}
-          onChange={(e) => dispatch({type: 'createFlashcard/setSideA', payload: e.target.value})}
-          style={{ flexGrow: 1, minWidth: 240}}
-        />
-        <input
-          name="Back text"
-          placeholder="Back text"
-          type="text"
-          value={sideB}
-          onChange={(e) => dispatch({type: 'createFlashcard/setSideB', payload: e.target.value})}
-          style={{ flexGrow: 1, minWidth: 240 }}
-        />
+        <Link href="" onClick={handleClickClose}>X</Link>
+        <form 
+          onSubmit={submitData}
+          className="flashcard-form"
+          name="flashcard"
+          data-test="flashcard-form"
+        >
+            <textarea
+              name="Front text"
+              placeholder="Front text"
+              value={sideA}
+              onChange={(e) => dispatch({type: 'createFlashcard/setSideA', payload: e.target.value})}
+            />
+            <textarea
+              name="Back text"
+              placeholder="Back text"
+              value={sideB}
+              onChange={(e) => dispatch({type: 'createFlashcard/setSideB', payload: e.target.value})}
+            />
+            <input 
+              disabled={!sideA || !sideB} 
+              type="submit" 
+              value={selectedRadioId?.length ? "Update" : "Create"} 
+            />
+        </form>
       </div>
-      <div
-        style={{ justifySelf: "flex-end" }}
-      >
-        <input 
-          disabled={!sideA || !sideB} 
-          type="submit" 
-          value={selectedRadioId?.length ? "Update" : "Create"} 
-        />
-        <input 
-          type="button" 
-          onClick={handleEditClick} 
-          value={!toggleRadios ? 'Edit' : 'Cancel'} 
-        />
-      </div>
-    </form>
+    </div>
   )
 }

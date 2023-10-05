@@ -36,7 +36,7 @@ h2 {
   padding: 6px;
 }
 
-input, button, select {
+input, button, textarea, select {
   margin: var(--margin-preset);
   height: 2rem;
   padding-left: 1rem;
@@ -46,11 +46,16 @@ input, button, select {
   border-width: thin;
 }
 
+textarea {
+  height: 150px;
+  width: calc(100% - var(--margin-preset) * 2);
+}
+
 nav {
   display: flex;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 2;
   flex-wrap: wrap;
   height: 3rem;
   padding-left: 1rem;
@@ -67,19 +72,29 @@ nav {
 .category-more {
   position: relative;
   display: inline;
+  z-index: 1;
 }
 
 .category-dropdown {
   display: flex;
   position: absolute;
   flex-wrap: wrap;
-  z-index: 1;
+  white-space: nowrap;
   background-color: var(--third-color);
   border-radius: 2px;
 }
 
+.backdrop {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
 .category-dropdown a {
-  margin: var(--gap-preset);
+  padding: var(--gap-preset);
+  width: 100%;
 }
 
 .deck-container {
@@ -118,6 +133,23 @@ nav {
 .deck:hover {
   transform: translate(3px, -3px);
   transition: 300ms;
+}
+
+.flashcard-form-modal-backdrop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: fade(white, 50%);
+  z-index: 2;
+}
+
+.flashcard-form-modal {
+  height: fit-content;
+  min-width: 100px;
+  max-width: calc(200px + var(--margin-preset) * 4);
+  background-color: var(--background-color);
+  box-shadow: var(--shadow-color);
+  padding: var(--margin-preset);
 }
 
 .flashcard-container {
