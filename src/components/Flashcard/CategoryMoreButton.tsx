@@ -1,21 +1,17 @@
 import Link from "next/link"
 import { useFlashcards, useFlashcardsDispatch } from "../../FlashcardsContext"
 import { useRouter } from 'next/router'
-import { SyntheticEvent, useRef } from "react"
-import { useWindowListener } from "../../../utilities"
+import { SyntheticEvent } from "react"
 
 export const CategoryMoreButton = (props: { categoryQuery: string }) => {
   const { categoryQuery } = props
   const { categoryId, toggleMoreMenu } = useFlashcards()
   const dispatch = useFlashcardsDispatch()
   const router = useRouter()
-  const ref = useRef<any>(null)
 
-  useWindowListener('click', (event) => {
-    if ( toggleMoreMenu && ref.current.contains(event.target) ) {
-      dispatch({type: 'moreMenu/toggled'})
-    }
-  })
+  const handleClickBackdrop = () => {
+    dispatch({type: 'moreMenu/toggled'})
+  }
 
   const handleClick = async (event: SyntheticEvent) => {
     event.stopPropagation()
@@ -71,7 +67,8 @@ export const CategoryMoreButton = (props: { categoryQuery: string }) => {
   }
 
   return (
-    <div className="category-more">
+    <div className="category-more" style={{ zIndex: toggleMoreMenu ? 2 : 1 }}>
+      {toggleMoreMenu && <div className="backdrop" onClick={handleClickBackdrop}></div>}
       <input 
         name="category more button"
         type="button" 
@@ -80,26 +77,23 @@ export const CategoryMoreButton = (props: { categoryQuery: string }) => {
         style={{ position: 'relative' }}
       />
       {toggleMoreMenu && (
-        <>
-          <div className="backdrop" ref={ref}></div>
-          <div className="category-dropdown">
-            <Link href="" onClick={handleClickNew}>
-              New
-            </Link>
-            <hr style={{width : '100%'}} />
-            <Link href="" onClick={handleClickEdit}>
-              Edit
-            </Link>
-            <hr style={{width : '100%'}} />
-            <Link href="" onClick={handleClickRenameCategory}>
-              Rename Category
-            </Link>
-            <hr style={{width : '100%'}} />
-            <Link href="" onClick={handleClickDeleteCategory}>
-              Delete Category
-            </Link>
-          </div>
-        </>
+        <div className="category-dropdown">
+          <Link href="" onClick={handleClickNew}>
+            New
+          </Link>
+          <hr style={{width : '100%'}} />
+          <Link href="" onClick={handleClickEdit}>
+            Edit
+          </Link>
+          <hr style={{width : '100%'}} />
+          <Link href="" onClick={handleClickRenameCategory}>
+            Rename Category
+          </Link>
+          <hr style={{width : '100%'}} />
+          <Link href="" onClick={handleClickDeleteCategory}>
+            Delete Category
+          </Link>
+        </div>
       )}
     </div>
   )

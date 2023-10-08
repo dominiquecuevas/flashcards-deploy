@@ -43,23 +43,22 @@ export const Flashcardv2 = (props: FlashcardProps) => {
     dispatch({type: 'createFlashcard/setSideA', payload: target.getAttribute('data-sideA')})
     dispatch({type: 'createFlashcard/setSideB', payload: target.getAttribute('data-sideB')})
     dispatch({type: 'flashcardsFormToggle/toggled', payload: true})
+    dispatch({type: 'editFlashcard/toggled', payload: false})
   }
 
   return (
-    <div className='flashcard'>
+    <div className='flashcard' style={{ zIndex: toggleRadios ? 2 : undefined }}>
       <label 
         htmlFor={toggleRadios ? `radio-${id}` : `checkbox-${id}`}
       >
-        <div className='flashcard-inner' style={style}>
+        <div className='flashcard-inner' style={style} onClick={handleClick} >
           <div
             className='flashcard-sideA' 
-            onClick={handleClick}
           >
             {sideA}
           </div>
           <div 
             className='flashcard-sideB' 
-            onClick={handleClick}
           >
             {sideB}
           </div>
